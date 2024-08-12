@@ -1,0 +1,59 @@
+---
+import { supabase } from '../lib/supabase'
+import Layout from '../layouts/Layout.astro'
+import SearchForm from '../components/SearchForm'
+
+const { cookies, redirect } = Astro
+
+const accessToken = cookies.get('sb-access-token')
+const refreshToken = cookies.get('sb-refresh-token')
+
+if (!accessToken || !refreshToken) {
+  return redirect('/signin')
+}
+
+const { data, error } = await supabase.auth.setSession({
+  refresh_token: refreshToken.value,
+  access_token: accessToken.value,
+})
+
+if (error) {
+  cookies.delete('sb-access-token', {
+    path: '/',
+  })
+  cookies.delete('sb-refresh-token', {
+    path: '/',
+  })
+
+  return redirect('/signin')
+}
+
+const email = data?.user?.email
+---
+
+<Layout title="Búsqueda | APAFA">
+  <form action="/api/auth/signout">
+    <button type="submit">Cerrar sesión</button>
+  </form>
+  <div class="h-full flex flex-col justify-center items-center -mt-32">
+    <div class="w-full max-w-sm py-6">
+      <div class="px-6 max-w-sm mb-10">
+        <nav class="flex justify-between items-center">
+          <h1 class="text-2xl font-bold text-dark_blue">APAFA</h1>
+          <button>:X:</button>
+        </nav>
+      </div>
+      <div class="px-6 max-w-sm mb-6">
+        <h1 class="text-3xl font-bold text-dark_blue">Bienvenido</h1>
+        <p class="text-lg text-soft_blue">Buscar asociado por DNI.</p>
+      </div>
+      <SearchForm client:load />
+    </div>
+  </div>
+
+  <!-- <h1>Bienvenido {email}</h1>
+  <p>Estamos felices de verte aquí</p>
+  <form action="/api/auth/signout">
+    <button type="submit">Cerrar sesión</button>
+  </form> -->
+</Layout>
