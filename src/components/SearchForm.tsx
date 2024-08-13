@@ -1,19 +1,42 @@
 import { type FormEvent, useState } from "react";
+import Modal from './Modal';
+import { log } from "node_modules/astro/dist/core/logger/core";
 
 export default function SearchForm() {
-  const { message, handleSubmit } = useSearchForm();
+  const { message, handleSubmit, data, isModalOpen, setIsModalOpen } = useSearchForm();
 
   return (
-    <form onSubmit={handleSubmit} className="w-full flex flex-col gap-2 px-6">
-      <InputField id="search" name="search" />
-      <button type="submit" className="border rounded-lg bg-dark_blue text-lg text-white py-3">Buscar</button>
-      {message && <span className="text-red">{message}</span>}
-    </form>
+    <div>
+      <form
+        onSubmit={(e) => {
+          handleSubmit(e);
+        }}
+        className="w-full flex flex-col gap-2 px-6"
+      >
+        <InputField id="search" name="search" placeholder="Search..." />
+        <button
+          type="submit"
+          className="border rounded-lg bg-dark_blue text-lg text-white py-3"
+        >
+          Buscar
+        </button>
+        {message && <span className="text-red">{message}</span>}
+      </form>
+      {data && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          data={data}
+        />
+      )}
+    </div>
   );
 }
 
 function useSearchForm() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<string>("");
+  const [data, setData] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,23 +47,17 @@ function useSearchForm() {
       body: formData,
     });
 
-    const data = await response.json(); // object
+    const result = await response.json();
 
-    if (data.message) {
-      setMessage(data.message);
+    if (result.message) {
+      return setMessage(result.message);
     }
 
-  }
+    setData(result);
+    setIsModalOpen(true);
+  };
 
-  return { message, handleSubmit };
-}
-
-function InputField({ type = "text", id, name, placeholder, className }: InputFieldProps) {
-  const base = "border rounded-lg text-lg placeholder:text-soft_blue px-4 py-2"
-
-  return (
-    <input type={type} id={id} name={name} placeholder={placeholder} className={`${base} ${className}`} />
-  );
+  return { message, handleSubmit, data, isModalOpen, setIsModalOpen };
 }
 
 interface InputFieldProps {
@@ -49,4 +66,24 @@ interface InputFieldProps {
   name: string;
   placeholder?: string;
   className?: string;
+  value?: string;
+}
+
+function InputField({
+  type = "text",
+  id,
+  name,
+  placeholder,
+  className = "",
+}: InputFieldProps) {
+  const base = "border rounded-lg text-lg placeholder:text-soft_blue px-4 py-2";
+  return (
+    <input
+      type={type}
+      id={id}
+      name={name}
+      placeholder={placeholder}
+      className={`${base} ${className}`}
+    />
+  );
 }

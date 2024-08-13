@@ -2,6 +2,7 @@
 import { supabase } from '../lib/supabase'
 import Layout from '../layouts/Layout.astro'
 import SearchForm from '../components/SearchForm'
+import DropDown from '../components/DropDown'
 
 const { cookies, redirect } = Astro
 
@@ -32,15 +33,12 @@ const email = data?.user?.email
 ---
 
 <Layout title="Búsqueda | APAFA">
-  <form action="/api/auth/signout">
-    <button type="submit">Cerrar sesión</button>
-  </form>
   <div class="h-full flex flex-col justify-center items-center -mt-32">
     <div class="w-full max-w-sm py-6">
       <div class="px-6 max-w-sm mb-10">
         <nav class="flex justify-between items-center">
           <h1 class="text-2xl font-bold text-dark_blue">APAFA</h1>
-          <button>:X:</button>
+          <DropDown client:load />
         </nav>
       </div>
       <div class="px-6 max-w-sm mb-6">
@@ -50,10 +48,4 @@ const email = data?.user?.email
       <SearchForm client:load />
     </div>
   </div>
-
-  <!-- <h1>Bienvenido {email}</h1>
-  <p>Estamos felices de verte aquí</p>
-  <form action="/api/auth/signout">
-    <button type="submit">Cerrar sesión</button>
-  </form> -->
 </Layout>
