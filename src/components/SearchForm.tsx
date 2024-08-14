@@ -1,6 +1,5 @@
 import { type FormEvent, useState } from "react";
 import Modal from './Modal';
-import { log } from "node_modules/astro/dist/core/logger/core";
 
 export default function SearchForm() {
   const { message, handleSubmit, data, isModalOpen, setIsModalOpen } = useSearchForm();
