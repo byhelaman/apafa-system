@@ -1,16 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { supabase } from "../lib/supabase";
-
-// const email = data?.user?.email;
 
 import { SearchForm } from '@/components/SearchForm';
 import { Header } from '@/components/Header';
 
+const { isloggin, role } = Astro.locals
+
 ---
 
 <Layout title="Búsqueda | APAFA">
-  <Header client:load />
+  <Header data={{isloggin, role}} client:load />
   <section class="w-full sm:w-96 px-6">
     <div class="mb-6">
       <h2 class="text-3xl font-bold">Búsqueda</h2>

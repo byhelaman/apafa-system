@@ -4,10 +4,12 @@ import Layout from "../layouts/Layout.astro";
 import { SigninForm } from '@/components/auth/SigninForm';
 import { Header } from '@/components/Header';
 
+const { isloggin, role } = Astro.locals
+
 ---
 
 <Layout title="APAFA">
-  <Header client:load/>
+  <Header data={{isloggin, role}} client:load />
   <section class="w-screen sm:w-96 px-6">
     <div class="mb-6">
       <h2 class="text-3xl font-bold">Bienvenido!</h2>

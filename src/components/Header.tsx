@@ -17,22 +17,28 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 interface HeaderProps {
-  isloggin?: boolean;
+  data: {
+    isloggin: boolean,
+    role: string
+  }
 }
 
-export function Header({ isloggin = false }: HeaderProps) {
+interface DropDownProps {
+  role: string
+}
 
+export function Header({ data }: HeaderProps) {
   return (
-    <header className={`px-6 flex ${isloggin ? "justify-between" : "justify-center"} items-center my-10`}>
+    <header className={`px-6 flex ${data.isloggin ? "justify-between" : "justify-center"} items-center my-10`}>
       <h1 className="text-3xl uppercase font-bold">Apafa</h1>
-      {isloggin &&
-        <DropdownMenu />
+      {data.isloggin &&
+        <DropdownMenu role={data.role} />
       }
     </header>
   );
 }
 
-function DropdownMenu() {
+function DropdownMenu({ role = '' }: DropDownProps) {
   return (
     <Dropdown>
       <DropdownMenuTrigger asChild>
@@ -42,21 +48,24 @@ function DropdownMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-36">
         <DropdownMenuGroup>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
-              <span>Ajustes</span>
-            </DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>
-                  <a href="/members">Asociados</a>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <a href="/settings">Sistema</a>
-                </DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
+          {
+            role === 'admin' &&
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <span>Ajustes</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>
+                    <a href="/members">Asociados</a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <a href="/settings">Sistema</a>
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+          }
           <DropdownMenuItem>
             <a href="/search">Búsqueda</a>
           </DropdownMenuItem>

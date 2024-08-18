@@ -15,7 +15,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   });
 
   if (error) {
-    return new Response(JSON.stringify({ message: error.message }), { status: 500 });
+    return new Response(JSON.stringify({ message: "Ha habido un problema con su solicitud." }), { status: error.status });
   }
 
   const { access_token, refresh_token } = data.session;
@@ -30,6 +30,5 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     httpOnly: true,
   });
 
-  return new Response(JSON.stringify({ message: "iniciando...", redirect: "/search" }), { status: 200 });
-  // return redirect("/search");
+  return new Response(JSON.stringify({ message: "Ingresando...", redirect: "/search" }), { status: 200 });
 };

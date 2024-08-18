@@ -52,7 +52,6 @@ export function SigninForm() {
     });
 
     const json = await response.json();
-    console.log(json);
 
     // redirect to SEARCH page
     if (json.redirect) {
@@ -61,12 +60,8 @@ export function SigninForm() {
     }
 
     toast({
-      title: "method POST",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white text-wrap">{JSON.stringify(json, null, 2)}</code>
-        </pre>
-      ),
+      title: !json.redirect ? "Oh no! Algo ha salido mal." : '',
+      description: json.message
     })
   }
 
