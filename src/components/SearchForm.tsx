@@ -1,88 +1,150 @@
-import { type FormEvent, useState } from "react";
-import Modal from './Modal';
+// "use client"
 
-export default function SearchForm() {
-  const { message, handleSubmit, data, isModalOpen, setIsModalOpen } = useSearchForm();
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { set, z } from "zod"
 
-  return (
-    <div>
-      <form
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-        className="w-full flex flex-col gap-2 px-6"
-      >
-        <InputField id="search" name="search" placeholder="Search..." />
-        <button
-          type="submit"
-          className="border rounded-lg bg-dark_blue text-lg text-white py-3"
-        >
-          Buscar
-        </button>
-        {message && <span className="text-red">{message}</span>}
-      </form>
-      {data && (
-        <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          data={data}
-        />
-      )}
-    </div>
-  );
-}
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
 
-function useSearchForm() {
-  const [message, setMessage] = useState<string>("");
-  const [data, setData] = useState<any>(null);
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { InputInvite } from "./InputInvite"
+import { useState } from "react"
+import { Badge } from "@/components/ui/badge"
+
+// default styles
+const InputStyle = "h-auto text-6xl px-4 text-center"
+const ButtonStyle = "h-auto w-full text-lg"
+
+const FormSchema = z.object({
+  dni: z.string().min(1, {
+    message: "DNI requerido"
+  }).regex(/^\d+$/, {
+    message: "Solo se permiten números"
+  }).length(8, {
+    message: "DNI incompleto"
+  })
+})
+
+export function SearchForm() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [data, setData] = useState({});
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      dni: ""
+    },
+  })
 
-    const response = await fetch("/api/search", {
-      method: "POST",
-      body: formData,
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+
+    const response = await fetch('/api/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams(data).toString(),
     });
 
-    const result = await response.json();
+    const json = await response.json();
+    console.log(json);
 
-    if (result.message) {
-      return setMessage(result.message);
-    }
-
-    setData(result);
+    // show modal
     setIsModalOpen(true);
-  };
+    setData(json);
+  }
 
-  return { message, handleSubmit, data, isModalOpen, setIsModalOpen };
-}
-
-interface InputFieldProps {
-  type?: string;
-  id: string;
-  name: string;
-  placeholder?: string;
-  className?: string;
-  value?: string;
-}
-
-function InputField({
-  type = "text",
-  id,
-  name,
-  placeholder,
-  className = "",
-}: InputFieldProps) {
-  const base = "border rounded-lg text-lg placeholder:text-soft_blue px-4 py-2";
   return (
-    <input
-      type={type}
-      id={id}
-      name={name}
-      placeholder={placeholder}
-      className={`${base} ${className}`}
-    />
-  );
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+          <FormField
+            control={form.control}
+            name="dni"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input {...field} className={InputStyle} maxLength={8} autoFocus />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            data={data}
+          />
+          <Button type="submit" className={ButtonStyle}>Buscar</Button>
+        </form>
+      </Form>
+      <InputInvite text="Link de Invitación" />
+    </>
+  )
+}
+
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  data: {
+    message?: string;
+  }
+}
+
+function Modal({ isOpen, onClose, data = {} }: ModalProps) {
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle className="text-2xl">@code</DialogTitle>
+        </DialogHeader>
+        <DialogDescription className="sr-only">
+          Información de usuario
+        </DialogDescription>
+        <div className="">
+          <div className="">
+            <h4>@member</h4>
+            <div className="flex gap-2">
+              <Badge variant="secondary">@status</Badge>
+              <Badge variant="secondary">@date</Badge>
+            </div>
+          </div>
+          <div className="grid py-4">
+            <span>{data.message}</span>
+            <span>@phone</span>
+            <span>@address</span>
+          </div>
+          <div className="">
+            <div className="w-full flex justify-between items-center border rounded-md p-4">
+              <div className="">
+                <h4>@name</h4>
+                <span>@dni</span>
+              </div>
+              <Badge variant="secondary">@grade</Badge>
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
 }

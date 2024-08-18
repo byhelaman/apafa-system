@@ -1,26 +1,46 @@
+import { EllipsisVertical } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
 import {
-  DropdownMenu,
+  DropdownMenu as Dropdown,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuSub,
+  DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-  DropdownMenuPortal,
-  DropdownMenuSubContent,
-  DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu"
 
-import { EllipsisVertical } from "lucide-react"
+interface HeaderProps {
+  isloggin?: boolean;
+}
 
+export function Header({ isloggin = false }: HeaderProps) {
 
-export default function DropDown() {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <EllipsisVertical className="h-5 w-5" />
+    <header className={`px-6 flex ${isloggin ? "justify-between" : "justify-center"} items-center my-10`}>
+      <h1 className="text-3xl uppercase font-bold">Apafa</h1>
+      {isloggin &&
+        <DropdownMenu />
+      }
+    </header>
+  );
+}
+
+function DropdownMenu() {
+  return (
+    <Dropdown>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <EllipsisVertical className="h-6 w-6" />
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="w-36">
         <DropdownMenuGroup>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
@@ -32,7 +52,7 @@ export default function DropDown() {
                   <a href="/members">Asociados</a>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <a href="/system">Sistema</a>
+                  <a href="/settings">Sistema</a>
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
@@ -43,9 +63,9 @@ export default function DropDown() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <a href="/api/auth/signout">Cerrar sesión</a>
+          <a href="/signout">Cerrar sesión</a>
         </DropdownMenuItem>
       </DropdownMenuContent>
-    </DropdownMenu>
+    </Dropdown>
   )
 }

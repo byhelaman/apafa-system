@@ -9,7 +9,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const password = formData.get("password")?.toString();
 
   if (!email || !password) {
-    return new Response("Correo electr├│nico y contrase├▒a obligatorios", { status: 400 });
+    return new Response("Correo electrónico y contraseña obligatorios", { status: 400 });
   }
 
   const { error } = await supabase.auth.signUp({

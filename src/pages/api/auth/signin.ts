@@ -1,16 +1,13 @@
 // Con `output: 'hybrid'` configurado:
 // export const prerender = false;
+
 import type { APIRoute } from "astro";
 import { supabase } from "../../../lib/supabase";
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const formData = await request.formData();
-  const email = formData.get("email")?.toString();
-  const password = formData.get("password")?.toString();
-
-  if (!email || !password) {
-    return new Response(JSON.stringify({ message: "Campos incompletos" }), { status: 400 });
-  }
+  const email = formData.get("email")?.toString() ?? '';
+  const password = formData.get("password")?.toString() ?? '';
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -18,19 +15,21 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   });
 
   if (error) {
-    return new Response(JSON.stringify({ message: "Usuario no encontrado" }), { status: 401 });
+    return new Response(JSON.stringify({ message: error.message }), { status: 500 });
   }
 
   const { access_token, refresh_token } = data.session;
   cookies.set("sb-access-token", access_token, {
     path: "/",
-    httpOnly: true
+    secure: true,
+    httpOnly: true,
   });
   cookies.set("sb-refresh-token", refresh_token, {
     path: "/",
-    httpOnly: true
+    secure: true,
+    httpOnly: true,
   });
 
-  // return redirect("/search");
-  return new Response(JSON.stringify({ redirect: "/search" }), { status: 200 });
+  return new Response(JSON.stringify({ message: "iniciando...", redirect: "/search" }), { status: 200 });
+  // return redirect("/dashboard");
 };

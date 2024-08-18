@@ -10,6 +10,9 @@ export default defineConfig({
     applyBaseStyles: false,
   })],
   output: "server",
+  redirects: {
+    '/signout': '/api/auth/signout',
+  },
   server: { port: 3000 },
   adapter: vercel()
 });

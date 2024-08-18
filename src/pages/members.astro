@@ -27,20 +27,17 @@ if (error) {
   return redirect("/signin");
 }
 
-const email = data?.user?.email;
-
-import { SearchForm } from '@/components/SearchForm';
-import { Header } from '@/components/Header';
+import { Nav } from '@/components/Nav';
 
 ---
 
-<Layout title="Búsqueda | APAFA">
-  <Header isloggin={cookies ? true : false} client:load />
+<Layout title="Ajustes | APAFA">
+  <nav class="px-6">
+    <Nav title="Asociados"client:load/>
+  </nav>
   <section class="w-full sm:w-96 px-6">
     <div class="mb-6">
-      <h2 class="text-3xl font-bold">Búsqueda</h2>
-      <p class="text-lg">Buscar asociado por DNI</p>
+      <h2 class="text-3xl font-bold">Asociados</h2>
     </div>
-    <SearchForm client:load/>
   </section>
 </Layout>

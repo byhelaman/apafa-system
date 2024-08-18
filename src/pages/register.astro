@@ -1,18 +1,30 @@
 ---
-import Layout from '../layouts/Layout.astro'
+import Layout from "../layouts/Layout.astro";
+import { supabase } from "../lib/supabase";
 
-const { cookies, redirect } = Astro
+import { RegisterForm } from '@/components/auth/RegisterForm';
 
-const accessToken = cookies.get('sb-access-token')
-const refreshToken = cookies.get('sb-refresh-token')
+// const { data, error } = await supabase.auth.signUp(
+//   {
+//     email: 'jhon@doe.com',
+//     password: 'jhon@doe.com',
+//     options: {
+//       data: {
+//         user_name: 'John Doe',
+//       }
+//     }
+//   }
+// )
 
-if (accessToken || refreshToken) {
-  return redirect('/search')
-}
+// console.log(data);
+// console.log(error);
+
+
 ---
 
-<Layout title="Registrarse">
-  <h1>Registrarse</h1>
+<Layout title="Registrarse | APAFA">
+  <RegisterForm client:load/>
+  <!-- <h1>Registrarse</h1>
   <p>¿Ya tienes una cuenta? <a href="/signin">Iniciar sesión</a></p>
   <form action="/api/auth/register" method="post">
     <label for="email">Correo electrónico</label>
@@ -20,5 +32,5 @@ if (accessToken || refreshToken) {
     <label for="password">Contraseña</label>
     <input type="password" name="password" id="password" />
     <button type="submit">Registrarse</button>
-  </form>
+  </form> -->
 </Layout>

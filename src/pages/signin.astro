@@ -1,25 +1,29 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import AuthForm from '../components/AuthForm'
+import Layout from "../layouts/Layout.astro";
 
-const { cookies, redirect } = Astro
+const { cookies, redirect } = Astro;
 
-const accessToken = cookies.get('sb-access-token')
-const refreshToken = cookies.get('sb-refresh-token')
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
 
 if (accessToken && refreshToken) {
-  return redirect('/search')
+  return redirect("/search");
 }
+
+import { SigninForm } from '@/components/auth/SigninForm';
+import { Header } from '@/components/Header';
+
 ---
 
-<Layout title="Iniciar sesión | APAFA">
-  <div class="h-full flex flex-col justify-center items-center -mt-32">
-    <div class="w-full max-w-sm py-6">
-      <div class="px-6 max-w-sm mb-6">
-        <h1 class="text-3xl font-bold text-dark_blue">Hola!</h1>
-        <p class="text-lg text-soft_blue">Te damos la bienvenida de nuevo</p>
-      </div>
-      <AuthForm client:load />
+<Layout title="APAFA">
+  <Header client:load/>
+  <section class="w-screen sm:w-96 px-6">
+    <div class="mb-6">
+      <h2 class="text-3xl font-bold">Bienvenido!</h2>
+      <p class="text-lg">Accede a tu cuenta para continuar</p>
     </div>
-  </div>
+    <SigninForm client:load/>
+  </section>
+  <script>
+	</script>
 </Layout>
