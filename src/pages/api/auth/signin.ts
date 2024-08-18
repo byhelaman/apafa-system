@@ -31,5 +31,5 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   });
 
   return new Response(JSON.stringify({ message: "iniciando...", redirect: "/search" }), { status: 200 });
-  // return redirect("/dashboard");
+  // return redirect("/search");
 };
