@@ -24,7 +24,8 @@ const { title } = Astro.props;
 		<ViewTransitions />
 	</head>
 	<body class="h-screen w-full" transition:animate="none">
-		<main class="h-full w-full grid place-content-center gap-10">
+		<!-- <main class="h-full w-full grid place-content-center gap-10"> -->
+		<main class="h-full w-full grid justify-center gap-10">
 			<slot/>
 			<Toaster client:load/>
 		</main>

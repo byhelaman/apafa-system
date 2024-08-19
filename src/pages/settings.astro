@@ -4,17 +4,18 @@ import Layout from "../layouts/Layout.astro";
 import { Nav } from '@/components/Nav';
 import { CardUser } from '@/components/CardUser';
 
+
 ---
 
 <Layout title="Ajustes | APAFA">
-  <nav class="px-6">
-    <Nav title="Sistema"client:load/>
+  <nav class="px-6 flex items-center my-10">
+    <Nav title="Sistema" client:load/>
   </nav>
   <section class="w-full sm:w-96 px-6">
     <div class="mb-6">
       <h2 class="text-3xl font-bold">Sistema</h2>
       <p class="text-lg">Administrar usuarios</p>
     </div>
+    <CardUser client:load/>
   </section>
-  <!-- <CardUser data={users}/> -->
 </Layout>

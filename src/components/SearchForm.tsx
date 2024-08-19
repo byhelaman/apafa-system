@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { set, z } from "zod"
+import { z } from "zod"
 
 import {
   Form,
@@ -57,7 +57,6 @@ export function SearchForm() {
   })
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-
     const response = await fetch('/api/search', {
       method: 'POST',
       headers: {

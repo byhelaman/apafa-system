@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronLeft } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 import {
@@ -30,20 +30,20 @@ export function Nav({ title }: NavProps) {
   }
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="w-full flex justify-between items-center">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Ajustes</BreadcrumbLink>
+            <BreadcrumbLink href="/" className="text-xl font-bold">Ajustes</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{title}</BreadcrumbPage>
+            <BreadcrumbPage className="text-base">{title}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
       <Button variant="ghost" size="icon" onClick={handleClick}>
-        <ChevronLeft className="h-4 w-4" />
+        <ArrowLeft className="h-6 w-6" />
       </Button>
     </div>
   )

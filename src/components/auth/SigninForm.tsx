@@ -55,7 +55,7 @@ export function SigninForm() {
 
     // redirect to SEARCH page
     if (json.redirect) {
-      history.replaceState(null, '', '/search');
+      // history.replaceState(null, '', '/search');
       location.href = json.redirect;
     }
 

@@ -1,13 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { supabase } from "../lib/supabase";
-
 import { Nav } from '@/components/Nav';
 
 ---
 
 <Layout title="Ajustes | APAFA">
-  <nav class="px-6">
+  <nav class="px-6 flex items-center my-10">
     <Nav title="Asociados"client:load/>
   </nav>
   <section class="w-full sm:w-96 px-6">
