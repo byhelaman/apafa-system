@@ -30,7 +30,7 @@ interface DropDownProps {
 export function Header({ data }: HeaderProps) {
   return (
     <header className={`px-6 flex ${data.isloggin ? "justify-between" : "justify-center"} items-center my-10`}>
-      <h1 className="text-2xl uppercase font-bold">Apafa</h1>
+      <a href="/"><h1 className="text-2xl uppercase font-bold">Apafa</h1></a>
       {data.isloggin &&
         <DropdownMenu role={data.role} />
       }

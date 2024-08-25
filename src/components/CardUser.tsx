@@ -4,8 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Settings2 } from "lucide-react";
 
+interface Profile {
+  user_id: string;
+  user_name: string;
+  user_email: string;
+  role: string;
+  created_at: string;
+}
+
 export function CardUser() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,7 +32,7 @@ export function CardUser() {
   if (loading) {
     return (
       <>
-        <SkeletonUser />
+        <SkeletonUser cant={3} />
       </>
     )
   }
@@ -34,7 +42,7 @@ export function CardUser() {
       <div className="flex flex-col space-y-2">
         {
           data.map((profile => {
-            return <Card data={profile} />
+            return <Card key={profile.user_id} data={profile} />
           }))
         }
       </div>
@@ -43,20 +51,14 @@ export function CardUser() {
 }
 
 interface CardProps {
-  data: {
-    user_id: string;
-    user_name: string;
-    user_email: string;
-    role: string;
-    created_at: string;
-  }
+  data: Profile
 }
 
 function Card({ data }: CardProps) {
 
   return (
     <div className="w-full flex justify-between items-center border bg-transparent rounded-lg py-3 px-4">
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full max-w-36">
         <p className="text-lg font-medium">{data.user_name}</p>
         <div className="w-24">
           <p className="text-sm truncate ...">{data.user_id}</p>

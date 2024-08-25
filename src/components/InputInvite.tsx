@@ -16,15 +16,11 @@ import {
 // default styles
 const InputStyle = "h-auto text-lg px-4 bg-slate-100 pr-14"
 
-interface InputInviteProps {
-  text?: string
-}
-
-export function InputInvite({ text }: InputInviteProps) {
+export function InputInvite() {
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("https//apafa.pe/cj4tM2A1n7e@puC4");
+    navigator.clipboard.writeText("https://apafa.pe/cj4tM2A1n7e@puC4");
     setTooltipVisible(true);
 
     setTimeout(() => {
@@ -33,9 +29,10 @@ export function InputInvite({ text }: InputInviteProps) {
   };
 
   return (
-    <div className="mt-20">
-      <span className="block text-lg mb-2">{text}</span>
-      <div className="flex items-center space-x-2 relative">
+    <div className="mt-16">
+      <span className="relative flex justify-center items-center w-full before:w-full before:h-[1px] before:content-[''] before:bg-primary my-6"></span>
+      <span className="block text-sm">*Los padres de familia que deseen afiliarse a la <span className="uppercase">apafa</span> deben ingresar a este <a href="/register" className="underline text-blue-600">enlace</a>.</span>
+      {/* <div className="flex items-center space-x-2 relative">
         <div className="grid flex-1 gap-2">
           <Label htmlFor="link" className="sr-only">
             Link
@@ -50,7 +47,7 @@ export function InputInvite({ text }: InputInviteProps) {
         <TooltipProvider>
           <Tooltip open={tooltipVisible}>
             <TooltipTrigger asChild>
-              <Button type="submit" onClick={handleCopy} size="sm" className="px-3 absolute right-1" variant="outline">
+              <Button variant="outline" onClick={handleCopy} size="sm" className="px-3 absolute right-1" >
                 <span className="sr-only">Copy</span>
                 <Copy className="h-4 w-4" />
               </Button>
@@ -60,7 +57,7 @@ export function InputInvite({ text }: InputInviteProps) {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-      </div>
+      </div> */}
     </div>
   )
 }

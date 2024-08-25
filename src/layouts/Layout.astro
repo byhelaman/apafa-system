@@ -23,9 +23,9 @@ const { title } = Astro.props;
 		<title>{title}</title>
 		<ViewTransitions />
 	</head>
-	<body class="h-screen w-full" transition:animate="none">
+	<body class="h-full w-full" transition:animate="none">
 		<!-- <main class="h-full w-full grid place-content-center gap-10"> -->
-		<main class="h-full w-full grid justify-center gap-10">
+		<main class="h-screen w-full grid justify-center gap-10">
 			<slot/>
 			<Toaster client:load/>
 		</main>
@@ -34,6 +34,6 @@ const { title } = Astro.props;
 <style is:global>
 	html {
 		font-family: 'Archivo Variable', sans-serif;
-		background: #13151a;
+		scrollbar-width: none;
 	}
 </style>

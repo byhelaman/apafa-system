@@ -2,15 +2,18 @@
 import Layout from "../layouts/Layout.astro";
 import { Nav } from '@/components/Nav';
 
+import { SearchForm2 } from '@/components/SearchForm';
+
 ---
 
 <Layout title="Ajustes | APAFA">
   <nav class="px-6 flex items-center my-10">
     <Nav title="Asociados"client:load/>
   </nav>
-  <section class="w-full sm:w-96 px-6">
+  <section class="w-screen max-w-96 px-6">
     <div class="mb-6">
       <h2 class="text-3xl font-bold">Asociados</h2>
     </div>
+    <SearchForm2 client:load/>
   </section>
 </Layout>

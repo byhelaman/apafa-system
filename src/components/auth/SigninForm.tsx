@@ -17,8 +17,8 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
-
 import { InputInvite } from "../InputInvite"
+import { Google } from "./Providers"
 
 
 // default styles
@@ -96,7 +96,8 @@ export function SigninForm() {
           <Button type="submit" className={ButtonStyle}>Iniciar Sesión</Button>
         </form>
       </Form>
-      <InputInvite text="Regístrate con este enlace:" />
+      {/* <Google /> */}
+      <InputInvite />
     </>
   )
 }
