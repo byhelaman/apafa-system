@@ -13,12 +13,12 @@ const { isloggin, role } = Astro.locals
     <div class="my-5">
       <Header data={{isloggin, role}} client:load />
     </div>
-    <div class="">
+    <div class="pb-10">
       <div class="mb-6">
         <h2 class="text-3xl font-bold mb-2">Registro en línea</h2>
       <p class="text-lg leading-6">Para los nuevos miembros de la APAFA</p>
       </div>
-      <div class="pt-6 border-t-[1px] pb-10">
+      <div class="pt-6 border-t-[1px]">
         <RegisterForm client:load/>
       </div>
     </div>

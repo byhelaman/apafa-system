@@ -31,10 +31,12 @@ import { InputInvite } from "./InputInvite"
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Search } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 // default styles
-const InputStyle = "h-auto text-6xl px-4 text-center"
 const ButtonStyle = "h-auto w-full text-lg"
+const InputStyle = "h-auto text-6xl px-4 text-center focus:border-input focus:placeholder:text-muted-foreground"
+// const InputStyle = "h-auto text-lg px-4 focus:border-input focus:placeholder:text-muted-foreground"
 
 const FormSchema = z.object({
   dni: z.string().min(1, {
@@ -45,78 +47,6 @@ const FormSchema = z.object({
     message: "DNI incompleto"
   })
 })
-
-const FormSchema2 = z.object({
-  input: z.string().min(1, {
-    message: "Código requerido"
-  }).regex(/^\d+$/, {
-    message: "Solo se permiten números"
-  }).length(5, {
-    message: "Código no válido"
-  })
-})
-
-export function SearchForm2() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [data, setData] = useState({});
-
-  const form = useForm<z.infer<typeof FormSchema2>>({
-    resolver: zodResolver(FormSchema2),
-    defaultValues: {
-      input: ""
-    },
-  })
-
-  async function onSubmit(data: z.infer<typeof FormSchema2>) {
-    const response = await fetch('/api/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams(data).toString(),
-    });
-
-    const json = await response.json();
-    console.log(json);
-
-    // show modal
-    setIsModalOpen(true);
-    setData(json);
-  }
-
-  return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name="input"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div className="relative flex items-center">
-                    <span className="px-3 absolute left-[5px] text-lg">CR -</span>
-                    <Input {...field} maxLength={5} placeholder="Código de registro" className="h-auto text-lg px-14" />
-                    <Button type="submit" size="sm" className="px-3 absolute right-[5px]" variant="outline">
-                      <span className="sr-only">Search</span>
-                      <Search className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Modal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            data={data}
-          />
-        </form>
-      </Form>
-    </>
-  )
-}
 
 export function SearchForm() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -146,6 +76,8 @@ export function SearchForm() {
     setData(json);
   }
 
+  const errors = form.formState.errors;
+
   return (
     <>
       <Form {...form}>
@@ -156,9 +88,14 @@ export function SearchForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input {...field} className={InputStyle} maxLength={8} autoFocus />
+                  <Input {...field} maxLength={8}
+                    className={
+                      cn(
+                        InputStyle, errors.dni && "border-destructive placeholder:text-destructive"
+                      )
+                    }
+                  />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -168,6 +105,85 @@ export function SearchForm() {
             data={data}
           />
           <Button type="submit" className={ButtonStyle}>Buscar</Button>
+        </form>
+      </Form>
+    </>
+  )
+}
+
+const FormSchema2 = z.object({
+  code: z.string().min(1, {
+    message: "Código requerido"
+  }).regex(/^\d+$/, {
+    message: "Solo se permiten números"
+  }).length(5, {
+    message: "Código no válido"
+  })
+})
+
+export function SearchForm2() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [data, setData] = useState({});
+
+  const form = useForm<z.infer<typeof FormSchema2>>({
+    resolver: zodResolver(FormSchema2),
+    defaultValues: {
+      code: ""
+    },
+  })
+
+  async function onSubmit(data: z.infer<typeof FormSchema2>) {
+    const response = await fetch('/api/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams(data).toString(),
+    });
+
+    const json = await response.json();
+    console.log(json);
+
+    // show modal
+    setIsModalOpen(true);
+    setData(json);
+  }
+
+  const errors = form.formState.errors;
+
+  return (
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <FormField
+            control={form.control}
+            name="code"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="relative flex items-center">
+                    <span className={cn(`px-3 absolute left-[5px] text-lg text-slate-500`, errors.code && "text-destructive")}>CR -</span>
+                    <Input {...field} maxLength={5}
+                      className={
+                        cn(
+                          "h-auto text-lg px-14 focus:border-input focus:placeholder:text-muted-foreground", errors.code && "border-destructive placeholder:text-destructive"
+                        )
+                      }
+                    />
+                    <Button type="submit" size="sm" className="px-3 absolute right-[5px]" variant="outline">
+                      <span className="sr-only">Search</span>
+                      <Search className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            data={data}
+          />
         </form>
       </Form>
     </>

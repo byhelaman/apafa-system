@@ -22,6 +22,11 @@ export function Nav({ title }: NavProps) {
   const handleClick = () => {
     if (isDisabled) return;
     setIsDisabled(true);
+    
+    if (history.length <= 1) {
+      location.href = "/";
+    }
+
     history.back();
 
     setTimeout(() => {
@@ -30,7 +35,7 @@ export function Nav({ title }: NavProps) {
   }
 
   return (
-    <div className="w-full flex justify-between items-center">
+    <div className="w-full flex justify-between items-center py-5">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

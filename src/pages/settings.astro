@@ -8,14 +8,16 @@ import { CardUser } from '@/components/CardUser';
 ---
 
 <Layout title="Ajustes | APAFA">
-  <section class="w-screen max-w-96 px-6">
-    <nav class="flex items-center my-10">
-      <Nav title="Sistema" client:load/>
-    </nav>
-    <div class="mb-6">
-      <h2 class="text-3xl font-bold">Sistema</h2>
-      <p class="text-lg">Administrar usuarios</p>
+  <section class="w-full max-w-96 px-6 mx-auto flex flex-col gap-16">
+    <div class="my-5">
+      <Nav title="Sistema"client:load/>
     </div>
-    <CardUser client:load/>
+    <div class="pb-10">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold">Sistema</h2>
+      <p class="text-lg">Administrar usuarios</p>
+      </div>
+      <CardUser client:load/>
+    </div>
   </section>
 </Layout>

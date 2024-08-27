@@ -32,7 +32,7 @@ export function CardUser() {
   if (loading) {
     return (
       <>
-        <SkeletonUser cant={3} />
+        <SkeletonUser cant={6} />
       </>
     )
   }
@@ -64,7 +64,7 @@ function Card({ data }: CardProps) {
           <p className="text-sm truncate ...">{data.user_id}</p>
         </div>
       </div>
-      <Badge variant="secondary" className="font-medium text-sm capitalize">{data.role}</Badge>
+      <Badge variant="secondary" className="font-medium text-sm capitalize rounded-lg">{data.role}</Badge>
       <Button variant="ghost" className="p-3">
         <Settings2 className="h-5 w-5" />
       </Button>

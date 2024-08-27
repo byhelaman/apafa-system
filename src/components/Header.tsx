@@ -59,22 +59,22 @@ function DropdownMenu({ role = '' }: DropDownProps) {
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem>
-                    <a href="/members">Asociados</a>
+                    <a href="/members" className="w-full">Asociados</a>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <a href="/settings">Sistema</a>
+                    <a href="/settings" className="w-full">Sistema</a>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
             </DropdownMenuSub>
           }
           <DropdownMenuItem>
-            <a href="/search">Búsqueda</a>
+            <a href="/search" className="w-full">Búsqueda</a>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <a href="/signout">Cerrar sesión</a>
+          <a href="/signout" className="w-full">Cerrar sesión</a>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </Dropdown>

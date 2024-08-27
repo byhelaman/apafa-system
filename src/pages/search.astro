@@ -9,12 +9,16 @@ const { isloggin, role } = Astro.locals
 ---
 
 <Layout title="Búsqueda | APAFA">
-  <section class="w-full max-w-96 px-6">
-    <Header data={{isloggin, role}} client:load />
-    <div class="mb-6">
-      <h2 class="text-3xl font-bold">Búsqueda</h2>
-      <p class="text-lg">Buscar asociado por DNI</p>
+  <section class="w-full max-w-96 px-6 mx-auto flex flex-col gap-16">
+    <div class="my-5">
+      <Header data={{isloggin, role}} client:load />
     </div>
-    <SearchForm client:load/>
+    <div class="pb-10">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold">Búsqueda</h2>
+        <p class="text-lg">Buscar asociado por DNI</p>
+      </div>
+      <SearchForm client:load/>
+    </div>
   </section>
 </Layout>
