@@ -9,14 +9,18 @@ const { isloggin, role } = Astro.locals
 ---
 
 <Layout title="Registrarse | APAFA">
-  <Header data={{isloggin, role}} client:load/>
-  <section class="w-screen max-w-xl px-6 mx-auto">
-    <div class="mb-6">
-      <h2 class="text-3xl font-bold mb-2">Registro en línea</h2>
-      <p class="text-lg leading-6">Para los nuevos miembros de la APAFA</p>
+  <section class="w-full max-w-lg px-6 mx-auto flex flex-col gap-16">
+    <div class="my-5">
+      <Header data={{isloggin, role}} client:load />
     </div>
-    <div class="pt-6 border-t-[1px]">
-      <RegisterForm client:load/>
+    <div class="">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold mb-2">Registro en línea</h2>
+      <p class="text-lg leading-6">Para los nuevos miembros de la APAFA</p>
+      </div>
+      <div class="pt-6 border-t-[1px] pb-10">
+        <RegisterForm client:load/>
+      </div>
     </div>
   </section>
 </Layout>

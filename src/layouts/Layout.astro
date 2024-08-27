@@ -23,12 +23,11 @@ const { title } = Astro.props;
 		<title>{title}</title>
 		<ViewTransitions />
 	</head>
-	<body class="h-full w-full" transition:animate="none">
-		<!-- <main class="h-full w-full grid place-content-center gap-10"> -->
-		<main class="h-screen w-full grid justify-center gap-10">
+	<body transition:animate="none">
+		<main>
 			<slot/>
-			<Toaster client:load/>
 		</main>
+		<Toaster client:load/>
 	</body>
 </html>
 <style is:global>

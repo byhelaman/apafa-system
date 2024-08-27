@@ -15,6 +15,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
+import { cn } from "@/lib/utils";
+
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { InputInvite } from "../InputInvite"
@@ -22,14 +24,12 @@ import { Google } from "./Providers"
 
 
 // default styles
-const InputStyle = "h-auto text-lg px-4"
 const ButtonStyle = "h-auto w-full text-lg"
+const InputStyle = "h-auto text-lg px-4 focus:border-input focus:placeholder:text-muted-foreground"
 
 const FormSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
+  email: z.string().email({ message: "Campo obligatorio" }),
+  password: z.string().min(8, { message: "Campo obligatorio" }),
 })
 
 export function SigninForm() {
@@ -65,6 +65,8 @@ export function SigninForm() {
     })
   }
 
+  const errors = form.formState.errors;
+
   return (
     <>
       <Form {...form}>
@@ -75,9 +77,14 @@ export function SigninForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Correo electrónico" {...field} className={InputStyle} autoFocus />
+                  <Input placeholder="Correo electrónico" {...field}
+                    className={
+                      cn(
+                        InputStyle, errors.email && "border-destructive placeholder:text-destructive"
+                      )
+                    }
+                  />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -87,9 +94,14 @@ export function SigninForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input type="password" placeholder="Contraseña" {...field} className={InputStyle} />
+                  <Input type="password" placeholder="Contraseña" {...field}
+                    className={
+                      cn(
+                        InputStyle, errors.password && "border-destructive placeholder:text-destructive"
+                      )
+                    }
+                  />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />

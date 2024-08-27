@@ -15,9 +15,11 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Nav } from "./Nav"
 
 interface HeaderProps {
   data: {
+    title?: string,
     isloggin: boolean,
     role: string
   }
@@ -27,9 +29,9 @@ interface DropDownProps {
   role: string
 }
 
-export function Header({ data }: HeaderProps) {
+export function Header({ data, data: { title = '' } }: HeaderProps) {
   return (
-    <header className={`px-6 flex ${data.isloggin ? "justify-between" : "justify-center"} items-center my-10`}>
+    <header className={`flex ${data.isloggin ? "justify-between" : "justify-center"} items-center py-5`}>
       <a href="/"><h1 className="text-2xl uppercase font-bold">Apafa</h1></a>
       {data.isloggin &&
         <DropdownMenu role={data.role} />

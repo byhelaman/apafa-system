@@ -9,8 +9,8 @@ const { isloggin, role } = Astro.locals
 ---
 
 <Layout title="Búsqueda | APAFA">
-  <Header data={{isloggin, role}} client:load />
-  <section class="w-screen max-w-96 px-6">
+  <section class="w-full max-w-96 px-6">
+    <Header data={{isloggin, role}} client:load />
     <div class="mb-6">
       <h2 class="text-3xl font-bold">Búsqueda</h2>
       <p class="text-lg">Buscar asociado por DNI</p>

@@ -9,12 +9,16 @@ const { isloggin, role } = Astro.locals
 ---
 
 <Layout title="APAFA">
-  <Header data={{isloggin, role}} client:load />
-  <section class="w-screen max-w-96 px-6">
-    <div class="mb-6">
-      <h2 class="text-3xl font-bold">Bienvenido!</h2>
-      <p class="text-lg">Accede a tu cuenta para continuar</p>
+  <section class="w-full max-w-96 px-6 mx-auto flex flex-col gap-16">
+    <div class="my-5">
+      <Header data={{isloggin, role}} client:load />
     </div>
-    <SigninForm client:load/>
+    <div class="">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold">Bienvenido!</h2>
+        <p class="text-lg">Accede a tu cuenta para continuar</p>
+      </div>
+      <SigninForm client:load/> 
+    </div>
   </section>
 </Layout>
