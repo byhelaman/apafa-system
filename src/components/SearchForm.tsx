@@ -116,8 +116,6 @@ const FormSchema2 = z.object({
     message: "Código requerido"
   }).regex(/^\d+$/, {
     message: "Solo se permiten números"
-  }).length(5, {
-    message: "Código no válido"
   })
 })
 

@@ -21,6 +21,8 @@ import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { InputInvite } from "../InputInvite"
 import { Google } from "./Providers"
+import { useState } from "react"
+import { Loader2 } from "lucide-react"
 
 
 // default styles
@@ -33,6 +35,8 @@ const FormSchema = z.object({
 })
 
 export function SigninForm() {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -42,6 +46,7 @@ export function SigninForm() {
   })
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setLoading(true);
 
     const response = await fetch('/api/auth/signin', {
       method: 'POST',
@@ -57,12 +62,14 @@ export function SigninForm() {
     if (json.redirect) {
       // history.replaceState(null, '', '/search');
       location.href = json.redirect;
+      // setLoading(false);
     }
-
+    
     toast({
       title: !json.redirect ? "Oh no! Algo ha salido mal." : '',
       description: json.message
     })
+
   }
 
   const errors = form.formState.errors;
@@ -105,7 +112,10 @@ export function SigninForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className={ButtonStyle}>Iniciar Sesión</Button>
+          <Button type="submit" className={ButtonStyle} disabled={loading}>
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Iniciar Sesión
+          </Button>
         </form>
       </Form>
       {/* <Google /> */}

@@ -4,7 +4,7 @@ interface SkeletonUserProps {
   cant?: number;
 }
 
-export function SkeletonUser({ cant = 1 }: SkeletonUserProps) {
+export function UserSkeleton({ cant = 1 }: SkeletonUserProps) {
   return (
     <div className="flex flex-col space-y-2">
       {

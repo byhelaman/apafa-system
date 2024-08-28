@@ -227,7 +227,7 @@ export function RegisterForm() {
                         initialFocus
                         captionLayout="dropdown-buttons"
                         fromYear={1900}
-                        toYear={new Date().getFullYear()}
+                        toYear={new Date().getFullYear() - 16}
                       />
                     </PopoverContent>
                   </Popover>

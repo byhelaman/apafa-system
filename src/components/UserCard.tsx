@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SkeletonUser } from "./SkeletonUser";
+import { UserSkeleton } from "./Skeleton";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Settings2 } from "lucide-react";
@@ -12,7 +12,7 @@ interface Profile {
   created_at: string;
 }
 
-export function CardUser() {
+export function UserCard() {
   const [data, setData] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +32,7 @@ export function CardUser() {
   if (loading) {
     return (
       <>
-        <SkeletonUser cant={6} />
+        <UserSkeleton cant={6} />
       </>
     )
   }

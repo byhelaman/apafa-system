@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 
 import { Nav } from '@/components/Nav';
-import { CardUser } from '@/components/CardUser';
+import { UserCard } from '@/components/UserCard';
 
 
 ---
@@ -17,7 +17,7 @@ import { CardUser } from '@/components/CardUser';
         <h2 class="text-3xl font-bold">Sistema</h2>
       <p class="text-lg">Administrar usuarios</p>
       </div>
-      <CardUser client:load/>
+      <UserCard client:load/>
     </div>
   </section>
 </Layout>
