@@ -5,13 +5,13 @@ import { RegisterForm } from "@/components/auth/RegisterForm";
 
 import { Header } from '@/components/Header';
 
-const { isloggin, role } = Astro.locals
+const { isLoggedIn, role } = Astro.locals
 ---
 
 <Layout title="Registrarse | APAFA">
   <section class="w-full max-w-lg px-6 mx-auto flex flex-col gap-16">
     <div class="my-5">
-      <Header data={{isloggin, role}} client:load />
+      <Header data={{isLoggedIn, role}} client:load />
     </div>
     <div class="pb-10">
       <div class="mb-6">

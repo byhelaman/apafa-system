@@ -19,7 +19,7 @@ import {
 interface HeaderProps {
   data: {
     title?: string,
-    isloggin: boolean,
+    isLoggedIn: boolean,
     role: string
   }
 }
@@ -30,9 +30,9 @@ interface DropDownProps {
 
 export function Header({ data, data: { title = '' } }: HeaderProps) {
   return (
-    <header className={`flex ${data.isloggin ? "justify-between" : "justify-center"} items-center py-5`}>
+    <header className={`flex ${data.isLoggedIn ? "justify-between" : "justify-center"} items-center py-5`}>
       <a href="/"><h1 className="text-2xl uppercase font-bold">Apafa</h1></a>
-      {data.isloggin &&
+      {data.isLoggedIn &&
         <DropdownMenu role={data.role} />
       }
     </header>
