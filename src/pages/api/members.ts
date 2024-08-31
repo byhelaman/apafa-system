@@ -7,15 +7,15 @@ export const GET: APIRoute = async ({ request }) => {
   const limit = parseInt(url.searchParams.get('limit') || '1');
 
   const { data, error } = await supabase
-    .from('members')
-    .select('*, states!inner(status)')
-    .order('registration_code', { ascending: false })
+    .from('temp_data')
+    .select('*')
+    .order('created_at', { ascending: false })
     .range((page - 1) * limit, page * limit - 1);
-
+  
   const processedData = data?.map(member => {
     return {
       ...member,
-      states: member.states.length > 0 ? member.states[0] : null
+      children: member.children.length > 0 ? member.children : null
     };
   });
 

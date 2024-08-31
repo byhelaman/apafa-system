@@ -101,7 +101,6 @@ export function RegisterForm() {
   }, [childrenCount, append, remove, fields.length]);
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    // console.log(data);
     const bodyData = {
       ...data,
       terms: data.terms.toString(),

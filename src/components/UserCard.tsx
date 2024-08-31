@@ -61,7 +61,7 @@ function Card({ data }: CardProps) {
       <div className="flex flex-col w-full max-w-36">
         <p className="text-lg font-medium">{data.user_name}</p>
         <div className="w-24">
-          <p className="text-sm truncate ...">{data.user_id}</p>
+          <p className="text-sm truncate">{data.user_id}</p>
         </div>
       </div>
       <Badge variant="secondary" className="font-medium text-sm capitalize rounded-lg">{data.role}</Badge>

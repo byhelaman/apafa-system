@@ -18,9 +18,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   if (refreshToken) {
     const { data: { user }, error } = await supabase.auth.refreshSession({ refresh_token: refreshToken })
-
+    
     if (user) {
-      const { data } = await supabase.from("profiles").select("role").eq("user_id", user?.id).single()
+      const { data } = await supabase.from('profiles').select('role').eq('user_id', user?.id).single()
       context.locals.isLoggedIn = !!data?.role;
       context.locals.role = data?.role;
     }
