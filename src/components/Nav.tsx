@@ -39,7 +39,7 @@ export function Nav({ title }: NavProps) {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/" className="text-xl font-bold">Ajustes</BreadcrumbLink>
+            <BreadcrumbLink href="/" className="text-xl font-bold">APAFA</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>

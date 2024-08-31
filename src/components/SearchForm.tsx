@@ -33,10 +33,6 @@ import { Badge } from "@/components/ui/badge"
 import { Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-// default styles
-const ButtonStyle = "h-auto w-full text-lg"
-const InputStyle = "h-auto text-6xl px-4 text-center focus:border-input focus:placeholder:text-muted-foreground"
-// const InputStyle = "h-auto text-lg px-4 focus:border-input focus:placeholder:text-muted-foreground"
 
 const FormSchema = z.object({
   dni: z.string().min(1, {
@@ -88,13 +84,19 @@ export function SearchForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input {...field} maxLength={8}
-                    className={
-                      cn(
-                        InputStyle, errors.dni && "border-destructive placeholder:text-destructive"
-                      )
-                    }
-                  />
+                  <div className="relative flex items-center">
+                    <Input {...field} maxLength={8}
+                      className={
+                        cn(
+                          "h-auto text-lg pl-4 pr-14 focus:border-input focus:placeholder:text-muted-foreground", errors.dni && "border-destructive placeholder:text-destructive"
+                        )
+                      }
+                    />
+                    <Button type="submit" size="sm" className="px-3 absolute right-[5px]" variant="outline">
+                      <span className="sr-only">Search</span>
+                      <Search className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </FormControl>
               </FormItem>
             )}
@@ -104,7 +106,6 @@ export function SearchForm() {
             onClose={() => setIsModalOpen(false)}
             data={data}
           />
-          <Button type="submit" className={ButtonStyle}>Buscar</Button>
         </form>
       </Form>
     </>

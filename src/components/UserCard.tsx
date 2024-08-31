@@ -58,11 +58,9 @@ function Card({ data }: CardProps) {
 
   return (
     <div className="w-full flex justify-between items-center border bg-transparent rounded-lg py-3 px-4">
-      <div className="flex flex-col w-full max-w-36">
+      <div className="flex flex-col w-full max-w-32">
         <p className="text-lg font-medium">{data.user_name}</p>
-        <div className="w-24">
-          <p className="text-sm truncate">{data.user_id}</p>
-        </div>
+        <p className="text-sm truncate">{data.user_id}</p>
       </div>
       <Badge variant="secondary" className="font-medium text-sm capitalize rounded-lg">{data.role}</Badge>
       <Button variant="ghost" className="p-3">

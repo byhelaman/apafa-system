@@ -127,12 +127,12 @@ export function MemberCard() {
             </Button>
           </CollapsibleTrigger>
         </div>
-        <CollapsibleContent className="space-y-2">
+        <CollapsibleContent>
           {
             loading && page === 1 ? (
               'Loading...'
             ) : (
-              <div className="grid sm:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {data.map(profile => (
                   <Card key={profile.partner_id} data={profile} />
                 ))}
@@ -229,13 +229,13 @@ function Card({ data }: CardProps) {
   }
 
   return (
-    <div className="w-full h-fit border bg-transparent rounded-lg p-4 pb-6 min-h-52 relative space-y-4">
+    <div className="w-full h-fit border bg-transparent rounded-lg p-4 pb-6 min-h-52 relative space-y-4 transition hover:ring-4 hover:ring-slate-100 hover:shadow-lg bg-white">
       <div>
         <div className="space-y-4">
           <div className="space-y-1">
-            <div className="flex justify-between gap-4">
+            <div className="flex justify-between gap-4 items-center">
               <h3 className="text-2xl font-semibold truncate">{`${firstName} ${data.last_names}`}</h3>
-              <span className="text-2xl font-semibold inline-block mb-2">+{data.children.length}</span>
+              <span className="text-xl font-medium inline-block">+{data.children.length}</span>
             </div>
             <div className="flex gap-1">
               <Badge variant="secondary" className="rounded-md">{data.status}</Badge>
