@@ -4,18 +4,18 @@ import { supabase } from "../../../lib/supabase";
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const formData = await request.formData();
   const email = formData.get("email")?.toString() ?? '';
-  const password = formData.get("password")?.toString() ?? '';
+  const password = formData.get("password")?.toString() ?? ''
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error: errorSigIn } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
-  if (error) {
-    return new Response(JSON.stringify({ 
+  if (errorSigIn) {
+    return new Response(JSON.stringify({
       message: "Ha habido un problema con su solicitud.",
-      redirect: "/signout" 
-    }), { status: error.status });
+      redirect: "/signout"
+    }), { status: errorSigIn.status })
   }
 
   const { access_token, refresh_token } = data.session;
@@ -26,9 +26,9 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   })
 
   if (errorSession) {
-    return new Response(JSON.stringify({ 
+    return new Response(JSON.stringify({
       message: "Ha habido un problema con su solicitud.",
-      redirect: "/signout" 
+      redirect: "/signout"
     }), { status: errorSession.status });
   }
 

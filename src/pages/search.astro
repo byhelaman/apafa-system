@@ -10,13 +10,13 @@ const { isLoggedIn, role } = Astro.locals
 
 <Layout title="Búsqueda | APAFA">
   <section class="w-full max-w-2xl px-6 mx-auto flex flex-col gap-16">
-    <div class="my-5">
+    <div class = "my-5">
       <Header data={{isLoggedIn, role}} client:load />
     </div>
     <div class="pb-10">
       <div class="mb-6">
-        <h2 class="text-3xl font-bold">Búsqueda</h2>
-        <p class="text-lg">Buscar asociado por DNI</p>
+      <h2 class="text-3xl font-bold">Búsqueda</h2>
+      <p class="text-lg">Buscar asociado por DNI</p>
       </div>
       <SearchForm client:load/>
     </div>
