@@ -1,10 +1,10 @@
 // "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -13,40 +13,38 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from '@/components/ui/form'
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
-import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
-import { InputInvite } from "../InputInvite"
-import { Google } from "./Providers"
-import { useState } from "react"
-import { Loader2 } from "lucide-react"
-
+import { Input } from '@/components/ui/input'
+import { toast } from '@/components/ui/use-toast'
+import { InputInvite } from '../InputInvite'
+import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
+import { InputField } from './Components/InputField'
 
 // default styles
-const ButtonStyle = "h-auto w-full text-lg"
-const InputStyle = "h-auto text-lg px-4 focus:border-input focus:placeholder:text-muted-foreground"
+const ButtonStyle = 'h-auto w-full text-lg'
 
 const FormSchema = z.object({
-  email: z.string().email({ message: "Campo obligatorio" }),
-  password: z.string().min(8, { message: "Campo obligatorio" }),
+  email: z.string().email({ message: 'Campo obligatorio' }),
+  password: z.string().min(8, { message: 'Campo obligatorio' }),
 })
 
 export function SigninForm() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "",
-      password: ""
+      email: '',
+      password: '',
     },
   })
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    setLoading(true);
+    setLoading(true)
 
     const response = await fetch('/api/auth/signin', {
       method: 'POST',
@@ -54,68 +52,50 @@ export function SigninForm() {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams(data).toString(),
-    });
+    })
 
-    const json = await response.json();
+    const json = await response.json()
 
     // redirect to SEARCH page
     if (json.redirect) {
       // history.replaceState(null, '', '/search');
-      location.href = json.redirect;
+      location.href = json.redirect
       // setLoading(false);
     }
-    
-    toast({
-      title: !json.redirect ? "Oh no! Algo ha salido mal." : '',
-      description: json.message
-    })
 
+    toast({
+      title: !json.redirect ? 'Oh no! Algo ha salido mal.' : '',
+      description: json.message,
+    })
   }
 
-  const errors = form.formState.errors;
+  const {
+    control,
+    formState: { errors },
+  } = form
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input placeholder="Correo electrónico" {...field}
-                    className={
-                      cn(
-                        InputStyle, errors.email && "border-destructive placeholder:text-destructive"
-                      )
-                    }
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input type="password" placeholder="Contraseña" {...field}
-                    className={
-                      cn(
-                        InputStyle, errors.password && "border-destructive placeholder:text-destructive"
-                      )
-                    }
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className={ButtonStyle} disabled={loading}>
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Iniciar Sesión
-          </Button>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="space-y-2">
+            <InputField
+              control={control}
+              name="email"
+              errors={errors.email}
+              placeholder="Correo electrónico"
+            />
+            <InputField
+              control={control}
+              name="password"
+              errors={errors.password}
+              placeholder="Contraseña"
+            />
+            <Button type="submit" className={ButtonStyle} disabled={loading}>
+              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Iniciar Sesión
+            </Button>
+          </div>
         </form>
       </Form>
       {/* <Google /> */}
