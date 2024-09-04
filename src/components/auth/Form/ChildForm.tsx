@@ -46,6 +46,7 @@ export function ChildForm({ control, errors, index }: ChildFormProps) {
             control={control}
             name={`children_data.${index}.dni`}
             errors={children_data?.[index]?.dni}
+            maxLength={8}
             placeholder="DNI"
           />
           <DateField

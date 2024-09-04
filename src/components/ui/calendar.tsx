@@ -4,7 +4,7 @@ import { DayPicker, useDayPicker, useNavigation } from 'react-day-picker'
 
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
-import { format, set, setMonth } from 'date-fns'
+import { format, setMonth } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { Select, SelectTrigger, SelectContent, SelectItem } from './select'
 

@@ -13,7 +13,7 @@ const formSchema = z.object({
     .length(8, { message: 'DNI debe tener exactamente 8 caracteres' }),
   first_names: z.string().min(1, { message: 'Campo requerido' }),
   last_names: z.string().min(1, { message: 'Campo requerido' }),
-  date_of_birth: z.string().date(),
+  date_of_birth: z.date({ message: 'Campo requerido' }),
   phone: z.string().length(9, {
     message: 'Número de teléfono debe tener exactamente 9 caracteres',
   }),
@@ -35,7 +35,7 @@ const formSchema = z.object({
         dni: z
           .string()
           .min(8, { message: 'DNI debe tener al menos 8 caracteres' }),
-        date_of_birth: z.string().date(),
+        date_of_birth: z.date({ message: 'Campo requerido' }),
         school_grade: z.string().min(1, { message: 'Campo requerido' }),
         health_info: z.string().max(200).optional(),
       })
@@ -56,15 +56,14 @@ export function RegisterForm() {
       dni: '',
       first_names: '',
       last_names: '',
-      date_of_birth: '',
       phone: '',
       email: '',
       address: '',
       education_level: '',
       occupation: '',
       marital_status: '',
-      children: '',
       children_data: [],
+      children: '',
       terms: false,
     },
   })
@@ -72,6 +71,7 @@ export function RegisterForm() {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     const bodyData = {
       ...data,
+      date_of_birth: data.date_of_birth.toISOString(),
       terms: data.terms.toString(),
       children_data: JSON.stringify(data.children_data),
     }

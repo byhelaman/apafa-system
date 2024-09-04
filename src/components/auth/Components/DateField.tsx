@@ -34,7 +34,7 @@ export function DateField({
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  variant="outline"
+                  variant={'outline'}
                   className={cn(
                     'w-full pl-4 text-left font-normal text-lg h-auto text-muted-foreground hover:bg-transparent',
                     errors &&
@@ -54,10 +54,7 @@ export function DateField({
               <Calendar
                 mode="single"
                 selected={field.value}
-                onSelect={(date) => {
-                  const formattedDate = date ? format(date, 'yyyy-MM-dd') : ''
-                  field.onChange(formattedDate)
-                }}
+                onSelect={field.onChange}
                 disabled={(date) =>
                   date > new Date() || date < new Date('1900-01-01')
                 }
