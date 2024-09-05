@@ -1,8 +1,8 @@
 // "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import {
   Form,
@@ -12,7 +12,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from '@/components/ui/form'
 
 import {
   Dialog,
@@ -22,36 +22,39 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from '@/components/ui/dialog'
 
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { InputInvite } from "./InputInvite"
-import { useState } from "react"
-import { Badge } from "@/components/ui/badge"
-import { Search } from "lucide-react"
-import { cn } from "@/lib/utils"
-
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { InputInvite } from './InputInvite'
+import { useState } from 'react'
+import { Badge } from '@/components/ui/badge'
+import { Search } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 const FormSchema = z.object({
-  dni: z.string().min(1, {
-    message: "DNI requerido"
-  }).regex(/^\d+$/, {
-    message: "Solo se permiten números"
-  }).length(8, {
-    message: "DNI incompleto"
-  })
+  dni: z
+    .string()
+    .min(1, {
+      message: 'DNI requerido',
+    })
+    .regex(/^\d+$/, {
+      message: 'Solo se permiten números',
+    })
+    .length(8, {
+      message: 'DNI incompleto',
+    }),
 })
 
 export function SearchForm() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [data, setData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [data, setData] = useState({})
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      dni: ""
+      dni: '',
     },
   })
 
@@ -62,17 +65,17 @@ export function SearchForm() {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams(data).toString(),
-    });
+    })
 
-    const json = await response.json();
-    console.log(json);
+    const json = await response.json()
+    console.log(json)
 
     // show modal
-    setIsModalOpen(true);
-    setData(json);
+    setIsModalOpen(true)
+    setData(json)
   }
 
-  const errors = form.formState.errors;
+  const errors = form.formState.errors
 
   return (
     <>
@@ -85,14 +88,21 @@ export function SearchForm() {
               <FormItem>
                 <FormControl>
                   <div className="relative flex items-center">
-                    <Input {...field} maxLength={8}
-                      className={
-                        cn(
-                          "h-auto text-lg pl-4 pr-14 focus:border-input focus:placeholder:text-muted-foreground", errors.dni && "border-destructive placeholder:text-destructive"
-                        )
-                      }
+                    <Input
+                      {...field}
+                      maxLength={8}
+                      className={cn(
+                        'h-auto text-lg pl-4 pr-14 focus:border-input focus:placeholder:text-muted-foreground',
+                        errors.dni &&
+                          'border-destructive placeholder:text-destructive'
+                      )}
                     />
-                    <Button type="submit" size="sm" className="px-3 absolute right-[5px]" variant="outline">
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      size="sm"
+                      className="px-3 absolute right-[5px]"
+                    >
                       <span className="sr-only">Search</span>
                       <Search className="h-4 w-4" />
                     </Button>
@@ -113,21 +123,24 @@ export function SearchForm() {
 }
 
 const FormSchema2 = z.object({
-  code: z.string().min(1, {
-    message: "Código requerido"
-  }).regex(/^\d+$/, {
-    message: "Solo se permiten números"
-  })
+  code: z
+    .string()
+    .min(1, {
+      message: 'Código requerido',
+    })
+    .regex(/^\d+$/, {
+      message: 'Solo se permiten números',
+    }),
 })
 
 export function SearchForm2() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [data, setData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [data, setData] = useState({})
 
   const form = useForm<z.infer<typeof FormSchema2>>({
     resolver: zodResolver(FormSchema2),
     defaultValues: {
-      code: ""
+      code: '',
     },
   })
 
@@ -138,17 +151,17 @@ export function SearchForm2() {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams(data).toString(),
-    });
+    })
 
-    const json = await response.json();
-    console.log(json);
+    const json = await response.json()
+    console.log(json)
 
     // show modal
-    setIsModalOpen(true);
-    setData(json);
+    setIsModalOpen(true)
+    setData(json)
   }
 
-  const errors = form.formState.errors;
+  const errors = form.formState.errors
 
   return (
     <>
@@ -161,15 +174,29 @@ export function SearchForm2() {
               <FormItem>
                 <FormControl>
                   <div className="relative flex items-center">
-                    <span className={cn(`px-3 absolute left-[5px] text-lg text-slate-500`, errors.code && "text-destructive")}>CR -</span>
-                    <Input {...field} maxLength={5}
-                      className={
-                        cn(
-                          "h-auto text-lg px-14 focus:border-input focus:placeholder:text-muted-foreground", errors.code && "border-destructive placeholder:text-destructive"
-                        )
-                      }
+                    <span
+                      className={cn(
+                        `px-3 absolute left-[5px] text-lg text-slate-500`,
+                        errors.code && 'text-destructive'
+                      )}
+                    >
+                      CR -
+                    </span>
+                    <Input
+                      {...field}
+                      maxLength={5}
+                      className={cn(
+                        'h-auto text-lg px-14 focus:border-input focus:placeholder:text-muted-foreground',
+                        errors.code &&
+                          'border-destructive placeholder:text-destructive'
+                      )}
                     />
-                    <Button type="submit" size="sm" className="px-3 absolute right-[5px]" variant="outline">
+                    <Button
+                      type="submit"
+                      size="sm"
+                      className="px-3 absolute right-[5px]"
+                      variant="outline"
+                    >
                       <span className="sr-only">Search</span>
                       <Search className="h-4 w-4" />
                     </Button>
@@ -190,10 +217,10 @@ export function SearchForm2() {
 }
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen: boolean
+  onClose: () => void
   data: {
-    message?: string;
+    message?: string
   }
 }
 

@@ -1,11 +1,12 @@
-import { ParentForm } from './Form/ParentForm'
+import { ParentForm } from './subforms/ParentForm'
 
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { Form } from '../ui/form'
-import { Button } from '../ui/button'
+import { Form } from '@/components/ui/form'
+import { Button } from '@/components/ui/button'
+import { toast } from '@/components/ui/use-toast'
 
 const formSchema = z.object({
   dni: z
@@ -85,7 +86,12 @@ export function RegisterForm() {
     })
 
     const json = await response.json()
-    console.log(json)
+    form.reset()
+
+    toast({
+      title: !json.error ? 'Oh no! Algo ha salido mal.' : '',
+      description: json.message,
+    })
   }
 
   const {

@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
 interface InputFieldProps {
+  type?: string
   control: any
   name: string
   errors: any
@@ -17,6 +18,7 @@ interface InputFieldProps {
 }
 
 export function InputField({
+  type = 'text',
   control,
   name,
   errors,
@@ -33,6 +35,7 @@ export function InputField({
           <FormControl>
             <Input
               {...field}
+              type={type}
               maxLength={maxLength}
               className={cn(
                 'h-auto text-lg px-4 focus:border-input focus:placeholder:text-muted-foreground',
