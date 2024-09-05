@@ -19,6 +19,7 @@ interface SelectFieldProps {
   control: any
   name: string
   errors: any
+  className?: string
   options: Options[]
   placeholder?: string
 }
@@ -26,23 +27,28 @@ interface SelectFieldProps {
 export function SelectField({
   control,
   name,
+  errors,
+  className,
   options,
   placeholder,
-  errors,
 }: SelectFieldProps) {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="w-full h-auto">
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <FormItem className="w-full">
+          <Select
+            onValueChange={(value) => field.onChange(value)}
+            defaultValue={field.value}
+          >
             <FormControl>
               <SelectTrigger
                 className={cn(
                   'text-lg px-4 h-auto text-muted-foreground hover:bg-transparent hover:text-slate-700',
                   errors &&
-                    'text-destructive border-destructive hover:text-destructive'
+                    'text-destructive border-destructive hover:text-destructive',
+                  className
                 )}
               >
                 <SelectValue placeholder={placeholder} />

@@ -27,13 +27,17 @@ import {
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { InputInvite } from './InputInvite'
 import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { InputField } from '../fields/InputField'
+import { SelectField } from '../fields/SelectField'
 
 const FormSchema = z.object({
+  filter: z
+    .string()
+    .refine((value) => value !== '', { message: 'Campo requerido' }),
   dni: z
     .string()
     .min(1, {
@@ -54,6 +58,7 @@ export function SearchForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      filter: '',
       dni: '',
     },
   })
@@ -75,42 +80,32 @@ export function SearchForm() {
     setData(json)
   }
 
-  const errors = form.formState.errors
+  const {
+    control,
+    formState: { errors },
+  } = form
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-          <FormField
-            control={form.control}
-            name="dni"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div className="relative flex items-center">
-                    <Input
-                      {...field}
-                      maxLength={8}
-                      className={cn(
-                        'h-auto text-lg pl-4 pr-14 focus:border-input focus:placeholder:text-muted-foreground',
-                        errors.dni &&
-                          'border-destructive placeholder:text-destructive'
-                      )}
-                    />
-                    <Button
-                      type="submit"
-                      variant="outline"
-                      size="sm"
-                      className="px-3 absolute right-[5px]"
-                    >
-                      <span className="sr-only">Search</span>
-                      <Search className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </FormControl>
-              </FormItem>
-            )}
-          />
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="relative flex items-center">
+            <InputField
+              control={control}
+              name="dni"
+              errors={errors.dni}
+              className="pr-14"
+            />
+            <Button
+              type="submit"
+              variant="outline"
+              size="sm"
+              className="absolute right-[5px]"
+            >
+              <span className="sr-only">Search</span>
+              <Search className="h-4 w-4" />
+            </Button>
+          </div>
           <Modal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}

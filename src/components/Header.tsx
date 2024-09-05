@@ -18,17 +18,12 @@ import {
 
 interface HeaderProps {
   data: {
-    title?: string
     isLoggedIn: boolean
     role: string
   }
 }
 
-interface DropDownProps {
-  role: string
-}
-
-export function Header({ data, data: { title = '' } }: HeaderProps) {
+export function Header({ data }: HeaderProps) {
   return (
     <header
       className={`flex ${
@@ -43,7 +38,11 @@ export function Header({ data, data: { title = '' } }: HeaderProps) {
   )
 }
 
-function DropdownMenu({ role = '' }: DropDownProps) {
+interface DropDownProps {
+  role?: string
+}
+
+function DropdownMenu({ role }: DropDownProps) {
   return (
     <Dropdown>
       <DropdownMenuTrigger asChild>
@@ -74,9 +73,15 @@ function DropdownMenu({ role = '' }: DropDownProps) {
               </DropdownMenuPortal>
             </DropdownMenuSub>
           )}
+          <DropdownMenuSeparator />
           <DropdownMenuItem>
             <a href="/search" className="w-full">
               Búsqueda
+            </a>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <a href="/register" className="w-full">
+              Registro
             </a>
           </DropdownMenuItem>
         </DropdownMenuGroup>

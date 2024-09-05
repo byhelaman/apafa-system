@@ -1,6 +1,6 @@
-import { DateField } from '../fields/DateField'
-import { InputField } from '../fields/InputField'
-import { SelectField } from '../fields/SelectField'
+import { DateField } from '@/components/fields/DateField'
+import { InputField } from '@/components/fields/InputField'
+import { SelectField } from '@/components/fields/SelectField'
 import { ChildForm } from './ChildForm'
 
 import { useEffect } from 'react'

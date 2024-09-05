@@ -45,7 +45,7 @@ export function InputField({
               placeholder={placeholder}
             />
           </FormControl>
-          {/* <FormMessage /> */}
+          <FormMessage />
         </FormItem>
       )}
     />

@@ -1,6 +1,6 @@
-import { DateField } from '../fields/DateField'
-import { InputField } from '../fields/InputField'
-import { SelectField } from '../fields/SelectField'
+import { DateField } from '../../fields/DateField'
+import { InputField } from '../../fields/InputField'
+import { SelectField } from '../../fields/SelectField'
 
 interface ChildFormProps {
   control: any
