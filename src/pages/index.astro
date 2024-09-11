@@ -1,9 +1,14 @@
 ---
+import { CardForm } from '@/components/forms/CardForm';
 import Layout from '../layouts/Layout.astro';
 
-// const { redirect } = Astro;
-// return redirect('/signin');
 
 ---
 
-<Layout title="Welcome to Astro." />
+<Layout title="Welcome to Astro.">
+  <div class="h-screen w-screen grid place-content-center">
+    <section class="w-full max-w-96 mx-auto">
+      <CardForm client:load/>
+    </section>
+  </div>
+</Layout>

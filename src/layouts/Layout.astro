@@ -4,6 +4,7 @@ import '@/styles/globals.css'
 
 import { Toaster } from "@/components/ui/toaster"
 import { ViewTransitions } from 'astro:transitions';
+import MouseFollow from '../components/MouseFollow'
 
 interface Props {
 	title: string;
@@ -23,6 +24,7 @@ const { title } = Astro.props;
 		<title>{title}</title>
 		<ViewTransitions />
 	</head>
+	<MouseFollow client:load />
 	<body transition:animate="none">
 		<main>
 			<slot/>
@@ -30,6 +32,7 @@ const { title } = Astro.props;
 		<Toaster client:load/>
 	</body>
 </html>
+
 <style is:global>
 	html {
 		font-family: 'Archivo Variable', sans-serif;

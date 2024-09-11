@@ -12,9 +12,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const accessToken = context.cookies.get('sb-access-token')?.value
   const refreshToken = context.cookies.get('sb-refresh-token')?.value
 
-  if (pathname === '/') {
-    return Response.redirect(new URL('/signin', context.url), 302)
-  }
+  // if (pathname === '/') {
+  //   return Response.redirect(new URL('/signin', context.url), 302)
+  // }
 
   if (refreshToken) {
     const {
