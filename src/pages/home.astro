@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Dashboard } from '@/components/Dashboard';
+---
+
+<Layout title="Home">
+  <section class="w-full max-w-5xl mx-auto">
+    <Dashboard client:load/>
+  </section>
+</Layout>

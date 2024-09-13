@@ -30,6 +30,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           />
           {type === 'password' && (
             <Button
+              id="togglepass"
               type="button"
               variant="ghost"
               className="absolute right-1 top-1/2 transform -translate-y-1/2 w-[32px] h-[32px] p-1"

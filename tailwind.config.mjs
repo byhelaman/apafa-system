@@ -4,9 +4,6 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   prefix: '',
   theme: {
-    screens: {
-      'min-sm': '425px',
-    },
     container: {
       center: true,
       padding: '2rem',

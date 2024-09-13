@@ -34,24 +34,24 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
   }
 
-  if (pathname === '/signin' && accessToken) {
-    return Response.redirect(new URL('/search', context.url), 302)
+  if (pathname === '/' && accessToken) {
+    return Response.redirect(new URL('/home', context.url), 302)
   }
 
   const isUserRoute = ROUTES.USER.includes(pathname)
   const isAdminRoute = ROUTES.ADMIN.includes(pathname)
 
   if (isUserRoute && !accessToken) {
-    return Response.redirect(new URL('/signin', context.url), 302)
+    return Response.redirect(new URL('/', context.url), 302)
   }
 
   if (isAdminRoute) {
     if (!accessToken) {
-      return Response.redirect(new URL('/signin', context.url), 302)
+      return Response.redirect(new URL('/', context.url), 302)
     }
 
     if (context.locals.role !== 'admin') {
-      return Response.redirect(new URL('/search', context.url), 302)
+      return Response.redirect(new URL('/home', context.url), 302)
     }
   }
 
