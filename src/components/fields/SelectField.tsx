@@ -18,7 +18,6 @@ interface Options {
 interface SelectFieldProps {
   control: any
   name: string
-  errors: any
   className?: string
   options: Options[]
   placeholder?: string
@@ -27,7 +26,6 @@ interface SelectFieldProps {
 export function SelectField({
   control,
   name,
-  errors,
   className,
   options,
   placeholder,
@@ -43,14 +41,7 @@ export function SelectField({
             defaultValue={field.value}
           >
             <FormControl>
-              <SelectTrigger
-                className={cn(
-                  'text-lg px-4 h-auto text-muted-foreground hover:bg-transparent hover:text-slate-700',
-                  errors &&
-                    'text-destructive border-destructive hover:text-destructive',
-                  className
-                )}
-              >
+              <SelectTrigger className={className}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>

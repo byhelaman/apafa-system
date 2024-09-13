@@ -4,13 +4,10 @@ import { SelectField } from '../../fields/SelectField'
 
 interface ChildFormProps {
   control: any
-  errors: any
   index: number
 }
 
-export function ChildForm({ control, errors, index }: ChildFormProps) {
-  const { children_data } = errors
-
+export function ChildForm({ control, index }: ChildFormProps) {
   return (
     <>
       <div className="space-y-2">
@@ -18,7 +15,6 @@ export function ChildForm({ control, errors, index }: ChildFormProps) {
         <SelectField
           control={control}
           name={`children_data.${index}.relationship_type`}
-          errors={children_data?.[index]?.relationship_type}
           options={[
             { value: 'apoderado', label: 'Apoderado' },
             { value: 'padre', label: 'Padre' },
@@ -31,13 +27,11 @@ export function ChildForm({ control, errors, index }: ChildFormProps) {
           <InputField
             control={control}
             name={`children_data.${index}.first_names`}
-            errors={children_data?.[index]?.first_names}
             placeholder="Nombres"
           />
           <InputField
             control={control}
             name={`children_data.${index}.last_names`}
-            errors={children_data?.[index]?.last_names}
             placeholder="Apellidos"
           />
         </div>
@@ -45,21 +39,18 @@ export function ChildForm({ control, errors, index }: ChildFormProps) {
           <InputField
             control={control}
             name={`children_data.${index}.dni`}
-            errors={children_data?.[index]?.dni}
             maxLength={8}
             placeholder="DNI"
           />
           <DateField
             control={control}
             name={`children_data.${index}.date_of_birth`}
-            errors={children_data?.[index]?.date_of_birth}
             placeholder="Fecha de nac."
           />
         </div>
         <InputField
           control={control}
           name={`children_data.${index}.school_grade`}
-          errors={children_data?.[index]?.school_grade}
           placeholder="Grado y Sección"
         />
       </div>

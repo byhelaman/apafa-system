@@ -67,7 +67,6 @@ export function SigninForm() {
             <InputField
               control={control}
               name="email"
-              errors={errors.email}
               placeholder="Correo electrónico"
             />
             <PasswordField

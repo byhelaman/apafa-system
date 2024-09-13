@@ -18,10 +18,9 @@ import { Checkbox } from '@/components/ui/checkbox'
 
 interface ParentFormProps {
   control: any
-  errors: any
 }
 
-export function ParentForm({ control, errors }: ParentFormProps) {
+export function ParentForm({ control }: ParentFormProps) {
   const childrenCount = useWatch({ name: 'children', control: control })
   const { fields, remove, append } = useFieldArray({
     name: 'children_data',
@@ -60,13 +59,11 @@ export function ParentForm({ control, errors }: ParentFormProps) {
               <InputField
                 control={control}
                 name="first_names"
-                errors={errors.first_names}
                 placeholder="Nombres"
               />
               <InputField
                 control={control}
                 name="last_names"
-                errors={errors.last_names}
                 placeholder="Apellidos"
               />
             </div>
@@ -74,14 +71,12 @@ export function ParentForm({ control, errors }: ParentFormProps) {
               <InputField
                 control={control}
                 name="dni"
-                errors={errors.dni}
                 maxLength={8}
                 placeholder="DNI"
               />
               <DateField
                 control={control}
                 name="date_of_birth"
-                errors={errors.date_of_birth}
                 placeholder="Fecha de nac."
               />
             </div>
@@ -89,7 +84,6 @@ export function ParentForm({ control, errors }: ParentFormProps) {
               <SelectField
                 control={control}
                 name="education_level"
-                errors={errors.education_level}
                 options={[
                   { value: 'primaria', label: 'Primaria Completa' },
                   { value: 'secundaria', label: 'Secundaria Completa' },
@@ -101,7 +95,6 @@ export function ParentForm({ control, errors }: ParentFormProps) {
               <SelectField
                 control={control}
                 name="marital_status"
-                errors={errors.marital_status}
                 options={[
                   { value: 'soltero', label: 'Soltero' },
                   { value: 'casado', label: 'Casado' },
@@ -112,20 +105,17 @@ export function ParentForm({ control, errors }: ParentFormProps) {
             <InputField
               control={control}
               name="address"
-              errors={errors.address}
               placeholder="Dirección"
             />
             <div className="flex flex-col sm:flex-row gap-2">
               <InputField
                 control={control}
                 name="email"
-                errors={errors.email}
                 placeholder="Correo electrónico"
               />
               <InputField
                 control={control}
                 name="phone"
-                errors={errors.phone}
                 maxLength={9}
                 placeholder="Celular"
               />
@@ -134,13 +124,11 @@ export function ParentForm({ control, errors }: ParentFormProps) {
               <InputField
                 control={control}
                 name="occupation"
-                errors={errors.occupation}
                 placeholder="Ocupación"
               />
               <SelectField
                 control={control}
                 name="children"
-                errors={errors.children}
                 options={[
                   { value: '1', label: '1' },
                   { value: '2', label: '2' },
@@ -156,12 +144,7 @@ export function ParentForm({ control, errors }: ParentFormProps) {
                 Información del Estudiante:
               </h3>
               {fields.map((_, index) => (
-                <ChildForm
-                  key={index}
-                  control={control}
-                  errors={errors}
-                  index={index}
-                />
+                <ChildForm key={index} control={control} index={index} />
               ))}
             </div>
           )}
@@ -175,7 +158,6 @@ export function ParentForm({ control, errors }: ParentFormProps) {
             <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
               <FormControl>
                 <Checkbox
-                  className={errors.terms && 'border-destructive'}
                   checked={field.value}
                   onCheckedChange={field.onChange}
                 />

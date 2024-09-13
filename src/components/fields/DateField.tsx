@@ -14,16 +14,10 @@ import { Calendar } from '@/components/ui/calendar'
 interface DateFieldProps {
   control: any
   name: string
-  errors: any
   placeholder?: string
 }
 
-export function DateField({
-  control,
-  name,
-  errors,
-  placeholder,
-}: DateFieldProps) {
+export function DateField({ control, name, placeholder }: DateFieldProps) {
   return (
     <FormField
       control={control}
@@ -36,9 +30,7 @@ export function DateField({
                 <Button
                   variant={'outline'}
                   className={cn(
-                    'w-full pl-4 text-left font-normal text-lg h-auto text-muted-foreground hover:bg-transparent',
-                    errors &&
-                      'hover:text-destructive text-destructive border-destructive'
+                    'w-full pl-4 text-left font-normal text-lg h-auto text-muted-foreground hover:bg-transparent'
                   )}
                 >
                   {field.value ? (
