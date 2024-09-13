@@ -90,12 +90,7 @@ export function SearchForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="relative flex items-center">
-            <InputField
-              control={control}
-              name="dni"
-              errors={errors.dni}
-              className="pr-14"
-            />
+            <InputField control={control} name="dni" className="pr-14" />
             <Button
               type="submit"
               variant="outline"

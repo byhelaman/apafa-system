@@ -102,7 +102,7 @@ export function RegisterForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <ParentForm control={control} errors={errors} />
+        <ParentForm control={control} />
         <Button type="submit" className="h-auto w-full text-lg mt-5">
           Enviar
         </Button>
