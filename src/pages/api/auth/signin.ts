@@ -53,7 +53,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   })
 
   return new Response(
-    JSON.stringify({ message: 'Ingresando...', redirect: '/dashboard' }),
+    JSON.stringify({ message: 'Ingresando...', redirect: '/home' }),
     { status: 200 }
   )
 }
