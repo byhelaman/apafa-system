@@ -2,8 +2,8 @@
 import '@fontsource-variable/archivo';
 import '@/styles/globals.css'
 
-import { Toaster } from "@/components/ui/toaster"
 import { ViewTransitions } from 'astro:transitions';
+import { Toaster } from "@/components/ui/toaster"
 import { MouseFollower } from '@/components/MouseFollower'
 
 interface Props {
@@ -25,7 +25,7 @@ const { title } = Astro.props;
 		<ViewTransitions />
 	</head>
 	<body>
-		<MouseFollower client:load excludeIds={['togglepass']}/>
+		<MouseFollower client:load/>
 		<main transition:animate="none">
 			<slot/>
 		</main>

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 
 const lerp = (start: number, end: number, t: number) =>
   start + (end - start) * t
@@ -15,19 +15,18 @@ export function MouseFollower({ excludeIds = [] }: MouseFollowerProps) {
     x: 0,
     y: 0,
   })
-  const [targetPosition, setTargetPosition] = useState<{
-    x: number
-    y: number
-  }>({ x: 0, y: 0 })
-  const [isVisible, setIsVisible] = useState(false)
-  const [scale, setScale] = useState(0)
-  const [clickScale, setClickScale] = useState(1)
-  const [isHoveringButton, setIsHoveringButton] = useState(false)
-  const [size, setSize] = useState({ width: 12, height: 12 })
-  const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 })
+  const [state, setState] = useState({
+    targetPosition: { x: 0, y: 0 },
+    isVisible: false,
+    scale: 0,
+    clickScale: 1,
+    isHoveringButton: false,
+    size: { width: 12, height: 12 },
+    lastPosition: { x: 0, y: 0 },
+  })
 
-  const delay = 0.15
-  const maxScale = 2.5
+  const delay = useRef(0.15).current
+  const maxScale = useRef(2.5).current
 
   const calculateSizeChange = useCallback(
     (current: { x: number; y: number }, last: { x: number; y: number }) => {
@@ -51,37 +50,38 @@ export function MouseFollower({ excludeIds = [] }: MouseFollowerProps) {
 
   const animate = useCallback(() => {
     setMousePosition((prev) => ({
-      x: lerp(prev.x, targetPosition.x, delay),
-      y: lerp(prev.y, targetPosition.y, delay),
+      x: lerp(prev.x, state.targetPosition.x, delay),
+      y: lerp(prev.y, state.targetPosition.y, delay),
     }))
 
-    setScale((prev) =>
-      lerp(
-        prev,
-        isVisible
-          ? Math.min((isHoveringButton ? 2.5 : 1) * clickScale, maxScale)
+    setState((prev) => {
+      const newScale = lerp(
+        prev.scale,
+        state.isVisible
+          ? Math.min(
+            (state.isHoveringButton ? 2.5 : 1) * state.clickScale,
+            maxScale
+          )
           : 0,
         delay
       )
-    )
 
-    setSize((prev) => {
-      const newSize = calculateSizeChange(targetPosition, lastPosition)
+      const newSize = calculateSizeChange(
+        state.targetPosition,
+        state.lastPosition
+      )
+
       return {
-        width: lerp(prev.width, newSize.width, delay),
-        height: lerp(prev.height, newSize.height, delay),
+        ...prev,
+        scale: newScale,
+        size: {
+          width: lerp(prev.size.width, newSize.width, delay),
+          height: lerp(prev.size.height, newSize.height, delay),
+        },
+        lastPosition: state.targetPosition,
       }
     })
-
-    setLastPosition(targetPosition)
-  }, [
-    targetPosition,
-    isVisible,
-    lastPosition,
-    calculateSizeChange,
-    isHoveringButton,
-    clickScale,
-  ])
+  }, [state, calculateSizeChange, delay, maxScale])
 
   useEffect(() => {
     let animationFrameId: number
@@ -97,90 +97,93 @@ export function MouseFollower({ excludeIds = [] }: MouseFollowerProps) {
   }, [animate])
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    setTargetPosition({ x: e.clientX, y: e.clientY })
-    setIsVisible(true)
+    setState((prev) => ({
+      ...prev,
+      targetPosition: { x: e.clientX, y: e.clientY },
+      isVisible: true,
+    }))
   }, [])
 
   const handleMouseOut = useCallback(() => {
-    setIsVisible(false)
+    setState((prev) => ({ ...prev, isVisible: false }))
   }, [])
 
-  const handleMouseOver = useCallback(
+  const handleMouseEnterButton = useCallback(
     (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      if (
-        target.tagName.toLowerCase() === 'button' &&
-        !excludeIds.includes(target.id)
-      ) {
-        setIsHoveringButton(true)
+      if (target.tagName === 'BUTTON' && !excludeIds.includes(target.id)) {
+        setState((prev) => ({ ...prev, isHoveringButton: true }))
       }
     },
     [excludeIds]
   )
 
-  const handleMouseLeave = useCallback(
+  const handleMouseLeaveButton = useCallback(
     (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      if (
-        target.tagName.toLowerCase() === 'button' &&
-        !excludeIds.includes(target.id)
-      ) {
-        setIsHoveringButton(false)
+      if (target.tagName === 'BUTTON' && !excludeIds.includes(target.id)) {
+        setState((prev) => ({ ...prev, isHoveringButton: false }))
       }
     },
     [excludeIds]
   )
 
   const handleMouseDown = useCallback(() => {
-    setClickScale((prevScale) => Math.min(prevScale + 0.5, 1.5))
+    setState((prev) => ({
+      ...prev,
+      clickScale: Math.min(prev.clickScale + 0.5, 1.5),
+    }))
   }, [])
 
   const handleMouseUp = useCallback(() => {
-    setClickScale(1)
+    setState((prev) => ({ ...prev, clickScale: 1 }))
   }, [])
 
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('mouseout', handleMouseOut)
-    window.addEventListener('mouseover', handleMouseOver)
-    window.addEventListener('mouseout', handleMouseLeave)
-    window.addEventListener('mousedown', handleMouseDown)
-    window.addEventListener('mouseup', handleMouseUp)
+    const handleEvents = () => {
+      window.addEventListener('mousemove', handleMouseMove)
+      window.addEventListener('mouseout', handleMouseOut)
+      document.addEventListener('mouseenter', handleMouseEnterButton, true)
+      document.addEventListener('mouseleave', handleMouseLeaveButton, true)
+      window.addEventListener('mousedown', handleMouseDown)
+      window.addEventListener('mouseup', handleMouseUp)
+    }
+
+    handleEvents()
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseout', handleMouseOut)
-      window.removeEventListener('mouseover', handleMouseOver)
-      window.removeEventListener('mouseout', handleMouseLeave)
+      document.removeEventListener('mouseenter', handleMouseEnterButton, true)
+      document.removeEventListener('mouseleave', handleMouseLeaveButton, true)
       window.removeEventListener('mousedown', handleMouseDown)
       window.removeEventListener('mouseup', handleMouseUp)
     }
   }, [
     handleMouseMove,
     handleMouseOut,
-    handleMouseOver,
-    handleMouseLeave,
+    handleMouseEnterButton,
+    handleMouseLeaveButton,
     handleMouseDown,
     handleMouseUp,
   ])
 
   const style = useMemo(
     () =>
-      ({
-        position: 'absolute',
-        left: mousePosition.x,
-        top: mousePosition.y,
-        transform: `translate(-50%, -50%) scale(${scale})`,
-        backdropFilter: 'invert(1)',
-        width: size.width,
-        height: size.height,
-        borderRadius: '50%',
-        pointerEvents: 'none',
-        transition: 'opacity 0.5s ease-out',
-        opacity: isVisible ? 1 : 0,
-        zIndex: 99999,
-      } as React.CSSProperties),
-    [mousePosition, scale, size, isVisible]
+    ({
+      position: 'fixed',
+      left: mousePosition.x,
+      top: mousePosition.y,
+      transform: `translate(-50%, -50%) scale(${state.scale})`,
+      backdropFilter: 'invert(1)',
+      width: state.size.width,
+      height: state.size.height,
+      borderRadius: '50%',
+      pointerEvents: 'none',
+      transition: 'opacity 0.5s ease-out',
+      zIndex: 99999,
+    } as React.CSSProperties),
+    [mousePosition, state]
   )
 
   return <div ref={followerRef} style={style} />

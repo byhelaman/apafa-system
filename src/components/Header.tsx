@@ -1,5 +1,5 @@
-import { Equal } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Equal } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 import {
   DropdownMenu as Dropdown,
@@ -9,7 +9,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -17,79 +16,63 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 interface HeaderProps {
-  data: {
-    isLoggedIn: boolean
-    role: string
+  data?: {
+    name?: string
+    role?: string
   }
 }
 
 export function Header({ data }: HeaderProps) {
+
   return (
-    <header
-      className={`flex ${
-        data.isLoggedIn ? 'justify-between' : 'justify-center'
-      } items-center py-5`}
-    >
-      <a href="/">
-        <h1 className="text-xl uppercase font-bold">Apafa</h1>
-      </a>
-      {data.isLoggedIn && <DropdownMenu role={data.role} />}
+    <header className="sticky top-5 h-10 px-6">
+      <nav className="h-full border rounded-md flex items-center justify-between gap-2 px-4 pr-1 bg-background ">
+        <a href="/" className="text-sm font-medium">APAFA145</a>
+        {data && <DropdownMenu name={data.name} role={data.role} />}
+      </nav>
     </header>
   )
 }
 
 interface DropDownProps {
+  name?: string
   role?: string
 }
 
-function DropdownMenu({ role }: DropDownProps) {
+function DropdownMenu({ name, role }: DropDownProps) {
   return (
     <Dropdown>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Equal className="h-6 w-6" />
+        <Button variant="ghost" className="h-auto p-2 aspect-square">
+          <Equal className="h-3.5 w-3.5" />
+          <span className="sr-only">Menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-36">
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>{name}</DropdownMenuLabel>
         <DropdownMenuGroup>
           {role === 'admin' && (
             <DropdownMenuSub>
+              <DropdownMenuSeparator />
               <DropdownMenuSubTrigger>
-                <span>Ajustes</span>
+                <span>Settings</span>
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem>
-                    <a href="/members" className="w-full">
-                      Asociados
-                    </a>
+                    <span>@item</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <a href="/settings" className="w-full">
-                      Sistema
-                    </a>
+                    <span>@item</span>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
             </DropdownMenuSub>
           )}
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <a href="/search" className="w-full">
-              Búsqueda
-            </a>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <a href="/register" className="w-full">
-              Registro
-            </a>
-          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <a href="/signout" className="w-full">
-            Cerrar sesión
-          </a>
+          <a href="/signout">Cerrar Sesión</a>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </Dropdown>

@@ -1,10 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Header } from '@/components/Header';
 import { Dashboard } from '@/components/Dashboard';
+
+const { name, role } = Astro.locals.auth
 ---
 
 <Layout title="Home">
   <section class="w-full max-w-5xl mx-auto">
+    <Header data={{name, role}} client:load />
     <Dashboard client:load/>
   </section>
 </Layout>

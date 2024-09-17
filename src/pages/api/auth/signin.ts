@@ -1,31 +1,29 @@
 import type { APIRoute } from 'astro'
-import { supabase } from '../../../lib/supabase'
+import { supabase } from '@/lib/supabase'
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const formData = await request.formData()
-  const email = formData.get('email')?.toString() ?? ''
-  const password = formData.get('password')?.toString() ?? ''
+  const inputEmail = formData.get('email')?.toString() || ''
+  const inputPassword = formData.get('password')?.toString() || ''
+  const inputCode = formData.get('code')?.toString() || ''
+  const inputDNI = formData.get('dni')?.toString() || ''
 
-  // const code = formData.get("code")?.toString() ?? ''
-  // const dni = formData.get("dni")?.toString() ?? ''
+  const email = inputEmail || `${inputCode}@${inputDNI}.com`
+  const password = inputPassword || inputDNI
 
-  const { data, error: errorSigIn } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  })
+  const { data, error: errorSignIn } = await supabase.auth.signInWithPassword({ email, password })
 
-  if (errorSigIn) {
+  if (errorSignIn) {
     return new Response(
       JSON.stringify({
-        message: 'Ha habido un problema con su solicitud.',
-        redirect: '/signout',
+        message: 'There was an issue with your request.',
+        redirect: '/'
       }),
-      { status: errorSigIn.status }
+      { status: 400 }
     )
   }
 
   const { access_token, refresh_token } = data.session
-
   const { error: errorSession } = await supabase.auth.setSession({
     access_token,
     refresh_token,
@@ -34,10 +32,10 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   if (errorSession) {
     return new Response(
       JSON.stringify({
-        message: 'Ha habido un problema con su solicitud.',
-        redirect: '/signout',
+        message: 'There was an issue with your request.',
+        redirect: '/'
       }),
-      { status: errorSession.status }
+      { status: 400 }
     )
   }
 
@@ -53,7 +51,9 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   })
 
   return new Response(
-    JSON.stringify({ message: 'Ingresando...', redirect: '/home' }),
+    JSON.stringify({
+      redirect: '/home'
+    }),
     { status: 200 }
   )
 }

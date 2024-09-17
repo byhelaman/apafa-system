@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import { SigninForm } from '@/components/forms/SigninForm';
 import { Header } from '@/components/Header';
 
-const { isLoggedIn, role } = Astro.locals
+const { name, role } = Astro.locals.auth
 
 ---
 
@@ -12,7 +12,7 @@ const { isLoggedIn, role } = Astro.locals
   <div class="h-screen w-screen grid place-content-center">
     <section class="w-full max-w-96 px-6 mx-auto flex flex-col gap-16 mb-20">
       <div class="my-5">
-        <Header data={{ isLoggedIn, role}} client:load />
+        <Header data={{ name, role}} client:load />
       </div>
       <div class="pb-10">
         <div class="mb-6">

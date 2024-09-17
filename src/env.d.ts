@@ -3,6 +3,7 @@
 interface ImportMetaEnv {
   readonly SUPABASE_URL: string
   readonly SUPABASE_ANON_KEY: string
+  readonly SUPABASE_ADMIN_KEY: string
 }
 
 interface ImportMeta {
@@ -11,7 +12,9 @@ interface ImportMeta {
 
 declare namespace App {
   interface Locals {
-    role: string,
-    isLoggedIn : boolean
+    auth: {
+      name: string
+      role: string
+    }
   }
 }

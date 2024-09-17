@@ -25,8 +25,8 @@ const PartnerSchema = z.object({
   code: z
     .string()
     .min(1, { message: 'El código de registro es obligatorio.' })
-    .max(5, {
-      message: 'El código de registro debe contener hasta 5 caracteres.',
+    .max(9, {
+      message: 'El código de registro debe contener hasta 6 caracteres.',
     }),
 
   dni: z.string().length(8, { message: 'El DNI debe contener 8 caracteres.' }),
@@ -74,7 +74,7 @@ export function CardForm() {
     }
 
     toast({
-      title: 'You submitted the following values:',
+      title: json.message,
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
@@ -124,11 +124,11 @@ export function CardForm() {
       <CardFooter className="flex flex-col gap-2 mt-24">
         <div className="w-full">
           <div className="flex items-center text-sm justify-center">
-            <Button variant="link" className="h-auto flex flex-wrap">
-              Condiciones <span>&nbsp;de uso</span>
+            <Button variant="link" className="h-auto px-0">
+              Condiciones de uso
             </Button>
-            <Separator orientation="vertical" className="h-5" />
-            <Button variant="link" className="h-auto text-wrap">
+            <Separator orientation="vertical" className="h-5 mx-2 sm:mx-3" />
+            <Button variant="link" className="h-auto px-0">
               Política de privacidad
             </Button>
           </div>
@@ -145,15 +145,14 @@ export function PartnerForm({ control }: any) {
         control={control}
         name="code"
         label="Código de registro"
-        maxLength={5}
-        placeholder="Ej: 09123"
+        maxLength={8}
+        placeholder="Ej: CRAF0000"
       />
       <InputField
         control={control}
         name="dni"
         label="Identificación (DNI)"
         maxLength={8}
-        placeholder="Ej: 09123"
       />
     </div>
   )

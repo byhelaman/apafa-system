@@ -2,7 +2,7 @@ import { defineMiddleware } from 'astro:middleware'
 import { supabase } from '@/lib/supabase'
 
 const ROUTES = {
-  USER: ['/search', '/members', '/settings'],
+  USER: ['/home', '/members', '/settings'],
   ADMIN: ['/members', '/settings', '/api/profiles', '/api/members'],
 }
 
@@ -12,25 +12,24 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const accessToken = context.cookies.get('sb-access-token')?.value
   const refreshToken = context.cookies.get('sb-refresh-token')?.value
 
-  // if (pathname === '/') {
-  //   return Response.redirect(new URL('/signin', context.url), 302)
-  // }
-
-  if (refreshToken) {
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.refreshSession({ refresh_token: refreshToken })
+  if (accessToken && refreshToken) {
+    const { data: { user }, error: errorRefreshSession } = await supabase.auth.refreshSession({ refresh_token: refreshToken })
 
     if (user) {
-      const { data } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('user_id', user?.id)
-        .single()
+      context.locals.auth = {
+        name: user?.user_metadata?.name,
+        role: user?.user_metadata?.app_role,
+      }
+    }
 
-      context.locals.isLoggedIn = !!data?.role
-      context.locals.role = data?.role
+    if (errorRefreshSession) {
+      return new Response(
+        JSON.stringify({
+          message: 'There was an issue with your request.',
+          redirect: '/signout'
+        }),
+        { status: 400 }
+      )
     }
   }
 
@@ -41,8 +40,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const isUserRoute = ROUTES.USER.includes(pathname)
   const isAdminRoute = ROUTES.ADMIN.includes(pathname)
 
-  if (isUserRoute && !accessToken) {
-    return Response.redirect(new URL('/', context.url), 302)
+  if (isUserRoute) {
+    if (!accessToken) {
+      return Response.redirect(new URL('/', context.url), 302)
+    }
   }
 
   if (isAdminRoute) {
@@ -50,7 +51,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
       return Response.redirect(new URL('/', context.url), 302)
     }
 
-    if (context.locals.role !== 'admin') {
+    if (context.locals.auth.role !== 'admin') {
       return Response.redirect(new URL('/home', context.url), 302)
     }
   }

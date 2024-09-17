@@ -14,9 +14,6 @@ export default defineConfig({
   ],
   server: { port: 3000 },
   output: 'server',
-  prefetch: {
-    defaultStrategy: 'viewport',
-  },
   redirects: {
     '/signout': '/api/auth/signout',
   },
