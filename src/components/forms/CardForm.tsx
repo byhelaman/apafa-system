@@ -119,9 +119,14 @@ export function CardForm() {
               </Button>
             </form>
           </Form>
+          {
+            tabValue === 'partner' && <span className='block my-6 text-sm text-center'>
+              No tiene una cuenta? <a href="/register" className='font-medium underline'>Regístrese</a>
+            </span>
+          }
         </Tabs>
       </CardContent>
-      <CardFooter className="flex flex-col gap-2 mt-24">
+      <CardFooter className={`flex flex-col gap-2 ${tabValue === 'admin' ? 'mt-[116px]' : 'mt-12'}`}>
         <div className="w-full">
           <div className="flex items-center text-sm justify-center">
             <Button variant="link" className="h-auto px-0">
@@ -146,7 +151,7 @@ export function PartnerForm({ control }: any) {
         name="code"
         label="Código de registro"
         maxLength={8}
-        placeholder="Ej: CRAF0000"
+        placeholder="Ej: CRAF0478"
       />
       <InputField
         control={control}
@@ -165,7 +170,6 @@ export function AdminForm({ control }: any) {
         control={control}
         name="email"
         label="Correo electrónico"
-        placeholder="correo@ejemplo.com"
       />
       <InputField
         type="password"

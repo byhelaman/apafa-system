@@ -5,9 +5,11 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="APAFA145">
-  <div class="h-screen w-screen grid place-content-center">
+  <div class="h-screen w-screen grid sm:place-content-center">
     <section class="w-full max-w-96 mx-auto">
-      <CardForm client:load/>
+      <div class="min-h-[600px] my-14">
+        <CardForm client:load/>
+      </div>
     </section>
   </div>
 </Layout>
