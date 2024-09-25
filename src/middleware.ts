@@ -1,28 +1,35 @@
 import { defineMiddleware } from 'astro:middleware'
 import { supabase } from '@/lib/supabase'
+import { jwtDecode, type JwtPayload } from 'jwt-decode'
 
 const ROUTES = {
   USER: ['/home', '/members', '/settings'],
   ADMIN: ['/members', '/settings', '/api/profiles', '/api/members'],
 }
 
+interface DecodedJwtPayload extends JwtPayload {
+  user_role: string
+  partner_id: string
+}
+
 export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname } = context.url
 
-  const accessToken = context.cookies.get('sb-access-token')?.value
+  const accessToken = context.cookies.get('sb-access-token')?.value || ''
   const refreshToken = context.cookies.get('sb-refresh-token')?.value
 
-  if (accessToken && refreshToken) {
-    const { data: { user }, error: errorRefreshSession } = await supabase.auth.refreshSession({ refresh_token: refreshToken })
+  if (refreshToken) {
+    const { error } = await supabase.auth.refreshSession({ refresh_token: refreshToken })
+    const jwt: DecodedJwtPayload = jwtDecode<DecodedJwtPayload>(accessToken);
 
-    if (user) {
+    if (jwt.user_role) {
       context.locals.auth = {
-        name: user?.user_metadata?.name,
-        role: user?.user_metadata?.app_role,
+        partnerId: jwt.partner_id,
+        role: jwt.user_role,
       }
     }
 
-    if (errorRefreshSession) {
+    if (error) {
       return new Response(
         JSON.stringify({
           message: 'There was an issue with your request.',
@@ -51,9 +58,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
       return Response.redirect(new URL('/', context.url), 302)
     }
 
-    if (context.locals.auth.role !== 'admin') {
-      return Response.redirect(new URL('/home', context.url), 302)
-    }
+    // if (context.locals.auth.role !== 'admin') {
+    //   return Response.redirect(new URL('/home', context.url), 302)
+    // }
   }
 
   return await next()

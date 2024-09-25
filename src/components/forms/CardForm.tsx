@@ -66,9 +66,8 @@ export function CardForm() {
 
     const json = await response.json()
 
-    // redirect to DASHBOARD page
     if (json.redirect) {
-      // history.replaceState(null, '', '/dashboard');
+      // history.replaceState(null, '', '/home');
       location.href = json.redirect
       // setLoading(false);
     }
@@ -85,10 +84,10 @@ export function CardForm() {
 
   return (
     <Card className="w-full border-none shadow-none">
-      <CardHeader>
+      <CardHeader className='space-y-2'>
         <CardTitle>APAFA145</CardTitle>
         <CardDescription>
-          Bienvenido, ingresa tus credenciales para continuar con el acceso.
+          Bienvenido! Por favor, ingresa tus credenciales para acceder al sistema.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -120,8 +119,10 @@ export function CardForm() {
             </form>
           </Form>
           {
-            tabValue === 'partner' && <span className='block my-6 text-sm text-center'>
-              No tiene una cuenta? <a href="/register" className='font-medium underline'>Regístrese</a>
+            tabValue === 'partner' && <span className='block my-6 text-sm text-muted-foreground text-center'>
+              No tiene una cuenta? <Button variant="link" className='p-0 h-auto'>
+                <a href="/register" className='font-medium'>Regístrese</a>
+              </Button>
             </span>
           }
         </Tabs>
