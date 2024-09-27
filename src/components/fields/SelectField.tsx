@@ -1,4 +1,4 @@
-import { FormControl, FormField, FormItem } from '@/components/ui/form'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import {
   Select,
   SelectContent,
@@ -18,6 +18,7 @@ interface Options {
 interface SelectFieldProps {
   control: any
   name: string
+  label?: string
   className?: string
   options: Options[]
   placeholder?: string
@@ -26,6 +27,7 @@ interface SelectFieldProps {
 export function SelectField({
   control,
   name,
+  label,
   className,
   options,
   placeholder,
@@ -36,6 +38,7 @@ export function SelectField({
       name={name}
       render={({ field }) => (
         <FormItem className="w-full">
+          <FormLabel>{label}</FormLabel>
           <Select
             onValueChange={(value) => field.onChange(value)}
             defaultValue={field.value}
@@ -47,7 +50,7 @@ export function SelectField({
             </FormControl>
             <SelectContent>
               <SelectGroup>
-                {field.value !== '' && <SelectLabel>{placeholder}</SelectLabel>}
+                {/* {field.value !== '' && <SelectLabel>{placeholder}</SelectLabel>} */}
                 {options.map((option) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
@@ -56,6 +59,7 @@ export function SelectField({
               </SelectGroup>
             </SelectContent>
           </Select>
+          <FormMessage />
         </FormItem>
       )}
     />

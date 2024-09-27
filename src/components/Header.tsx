@@ -17,14 +17,15 @@ import {
 
 interface HeaderProps {
   role: string
+  name: string
 }
 
-export function Header({ role }: HeaderProps) {
+export function Header({ role, name }: HeaderProps) {
 
   return (
     <header className="sticky top-5 h-10 px-6">
       <nav className="h-full border rounded-md flex items-center justify-between gap-2 px-4 pr-1 bg-background ">
-        <a href="/" className="text-sm font-medium">APAFA145</a>
+        <a href="/" className="text-sm font-semibold">APAFA145</a>
         <Dropdown>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-auto p-2 aspect-square">
@@ -33,7 +34,7 @@ export function Header({ role }: HeaderProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>@name</DropdownMenuLabel>
+            <DropdownMenuLabel>{name}</DropdownMenuLabel>
             <DropdownMenuGroup>
               {role === 'admin' && (
                 <DropdownMenuSub>

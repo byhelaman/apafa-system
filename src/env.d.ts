@@ -12,6 +12,7 @@ interface ImportMeta {
 declare namespace App {
   interface Locals {
     auth: {
+      userName: string
       partnerId: string
       role: string
     }

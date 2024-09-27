@@ -8,6 +8,7 @@ const ROUTES = {
 }
 
 interface DecodedJwtPayload extends JwtPayload {
+  user_name: string
   user_role: string
   partner_id: string
 }
@@ -24,6 +25,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
     if (jwt.user_role) {
       context.locals.auth = {
+        userName: jwt.user_name,
         partnerId: jwt.partner_id,
         role: jwt.user_role,
       }

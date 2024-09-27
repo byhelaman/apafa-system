@@ -8,13 +8,23 @@ import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+
+
 const formSchema = z.object({
-  dni: z
+  identity_card: z
     .string()
     .length(8, { message: 'DNI debe tener exactamente 8 caracteres' }),
-  first_names: z.string().min(1, { message: 'Campo requerido' }),
+  names: z.string().min(1, { message: 'Campo requerido' }),
   last_names: z.string().min(1, { message: 'Campo requerido' }),
-  date_of_birth: z.date({ message: 'Campo requerido' }),
+  dob: z.date({ message: 'Campo requerido' }),
   phone: z.string().length(9, {
     message: 'Número de teléfono debe tener exactamente 9 caracteres',
   }),
@@ -31,12 +41,12 @@ const formSchema = z.object({
         relationship_type: z
           .string()
           .refine((value) => value !== '', { message: 'Campo requerido' }),
-        first_names: z.string().min(1, { message: 'Campo requerido' }),
+        names: z.string().min(1, { message: 'Campo requerido' }),
         last_names: z.string().min(1, { message: 'Campo requerido' }),
-        dni: z
+        identity_card: z
           .string()
           .min(8, { message: 'DNI debe tener al menos 8 caracteres' }),
-        date_of_birth: z.date({ message: 'Campo requerido' }),
+        dob: z.date({ message: 'Campo requerido' }),
         school_grade: z.string().min(1, { message: 'Campo requerido' }),
         health_info: z.string().max(200).optional(),
       })
@@ -54,8 +64,8 @@ export function RegisterForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      dni: '',
-      first_names: '',
+      identity_card: '',
+      names: '',
       last_names: '',
       phone: '',
       email: '',
@@ -72,7 +82,7 @@ export function RegisterForm() {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     const bodyData = {
       ...data,
-      date_of_birth: data.date_of_birth.toISOString(),
+      dob: data.dob.toISOString(),
       terms: data.terms.toString(),
       children_data: JSON.stringify(data.children_data),
     }
@@ -89,7 +99,7 @@ export function RegisterForm() {
     form.reset()
 
     toast({
-      title: !json.error ? 'Oh no! Algo ha salido mal.' : '',
+      // title: !json.error ? 'Oh no! Algo ha salido mal.' : '',
       description: json.message,
     })
   }
@@ -102,10 +112,27 @@ export function RegisterForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <ParentForm control={control} />
-        <Button type="submit" className="h-auto w-full text-lg mt-5">
-          Enviar
-        </Button>
+        <Card className="w-full border-none shadow-none">
+          <CardHeader className='space-y-2'>
+            <CardTitle>Registro en línea</CardTitle>
+            <CardDescription>Para los nuevos miembros de la APAFA</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <span className='block py-6 border-t font-medium'>
+              Información Personal
+            </span>
+            <ParentForm control={control} />
+          </CardContent>
+          <CardFooter>
+            <div className="w-full">
+              <div className="flex items-center text-sm justify-center">
+                <Button className="w-full h-auto">
+                  Enviar
+                </Button>
+              </div>
+            </div>
+          </CardFooter>
+        </Card>
       </form>
     </Form>
   )

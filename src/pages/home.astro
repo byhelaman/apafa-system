@@ -3,13 +3,13 @@ import Layout from '../layouts/Layout.astro';
 import { Header } from '@/components/Header';
 import { Dashboard } from '@/components/Dashboard';
 
-const { role } = Astro.locals.auth
+const { role, userName } = Astro.locals.auth
 
 ---
 
-<Layout title="Home">
+<Layout title="Home | APAFA">
   <section class="w-full max-w-5xl mx-auto">
-    <Header role={role} client:load />
-    <Dashboard client:load/>
+    <Header role={role} name={userName} client:load />
+    <Dashboard role={role} client:load/>
   </section>
 </Layout>

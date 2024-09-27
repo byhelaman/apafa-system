@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { es } from 'date-fns/locale'
-import { FormControl, FormField, FormItem } from '@/components/ui/form'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import {
   Popover,
   PopoverContent,
@@ -14,29 +14,30 @@ import { Calendar } from '@/components/ui/calendar'
 interface DateFieldProps {
   control: any
   name: string
+  label?: string
+  className?: string
   placeholder?: string
 }
 
-export function DateField({ control, name, placeholder }: DateFieldProps) {
+export function DateField({ control, label, name, className, placeholder }: DateFieldProps) {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className="flex flex-col w-full mt-[6px]">
+          <FormLabel className='h-[15px] mb-[3px]'>{label}</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
                   variant={'outline'}
-                  className={cn(
-                    'w-full pl-4 text-left font-normal text-lg h-auto text-muted-foreground hover:bg-transparent'
-                  )}
+                  className={className}
                 >
                   {field.value ? (
                     format(field.value, 'P', { locale: es })
                   ) : (
-                    <span>{placeholder}</span>
+                    <span className='font-normal'>{placeholder}</span>
                   )}
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>
@@ -57,6 +58,7 @@ export function DateField({ control, name, placeholder }: DateFieldProps) {
               />
             </PopoverContent>
           </Popover>
+          <FormMessage />
         </FormItem>
       )}
     />

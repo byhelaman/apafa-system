@@ -22,6 +22,7 @@ interface ParentFormProps {
 
 export function ParentForm({ control }: ParentFormProps) {
   const childrenCount = useWatch({ name: 'children', control: control })
+
   const { fields, remove, append } = useFieldArray({
     name: 'children_data',
     control: control,
@@ -34,10 +35,10 @@ export function ParentForm({ control }: ParentFormProps) {
       for (let i = fields.length; i < count; i++) {
         append({
           relationship_type: '',
-          first_names: '',
+          names: '',
           last_names: '',
-          dni: '',
-          date_of_birth: '',
+          identity_card: '',
+          dob: '',
           school_grade: '',
           health_info: '',
         })
@@ -53,98 +54,104 @@ export function ParentForm({ control }: ParentFormProps) {
     <>
       <div className="space-y-4">
         <div className="wrapper">
-          <h3 className="font-medium text-lg mb-4">Información Personal:</h3>
-          <div className="space-y-2">
-            <div className="flex flex-col sm:flex-row gap-2">
+          <div className="space-y-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <InputField
                 control={control}
-                name="first_names"
-                placeholder="Nombres"
+                name="names"
+                label="Nombres"
               />
               <InputField
                 control={control}
                 name="last_names"
-                placeholder="Apellidos"
+                label="Apellidos"
               />
             </div>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <InputField
                 control={control}
-                name="dni"
+                name="identity_card"
+                label="Identificación (DNI)"
                 maxLength={8}
-                placeholder="DNI"
               />
               <DateField
                 control={control}
-                name="date_of_birth"
-                placeholder="Fecha de nac."
+                name="dob"
+                label='Fecha de Nac.'
+                placeholder='Seleccionar'
               />
             </div>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <InputField
+              control={control}
+              name="address"
+              label="Dirección"
+            />
+            <div className="flex flex-col sm:flex-row gap-3">
               <SelectField
                 control={control}
                 name="education_level"
+                label='Nivel de educación'
+                placeholder='Seleccionar'
                 options={[
                   { value: 'primaria', label: 'Primaria Completa' },
                   { value: 'secundaria', label: 'Secundaria Completa' },
                   { value: 'superior', label: 'Superior Técnica' },
                   { value: 'universitaria', label: 'Universitaria' },
                 ]}
-                placeholder="Nivel de educación"
               />
               <SelectField
                 control={control}
                 name="marital_status"
+                label='Estado civil'
+                placeholder='Seleccionar'
                 options={[
                   { value: 'soltero', label: 'Soltero' },
+                  { value: 'live-in-partner', label: 'Conviviente' },
                   { value: 'casado', label: 'Casado' },
                 ]}
-                placeholder="Estado civil"
               />
             </div>
-            <InputField
-              control={control}
-              name="address"
-              placeholder="Dirección"
-            />
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <InputField
                 control={control}
                 name="email"
-                placeholder="Correo electrónico"
+                label="Correo electrónico"
               />
               <InputField
                 control={control}
                 name="phone"
+                label="Celular"
                 maxLength={9}
-                placeholder="Celular"
               />
             </div>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <InputField
                 control={control}
                 name="occupation"
-                placeholder="Ocupación"
+                label="Profesión u Oficio"
               />
               <SelectField
                 control={control}
                 name="children"
+                label='Estudiantes a cargo'
+                placeholder='Seleccionar'
                 options={[
                   { value: '1', label: '1' },
                   { value: '2', label: '2' },
                   { value: '3', label: '3' },
                 ]}
-                placeholder="Estudiantes a cargo"
               />
             </div>
           </div>
           {childrenCount && (
-            <div className="mt-6 space-y-6 py-6 px-4 border-[1px] rounded-md">
-              <h3 className="font-medium text-lg mb-4">
-                Información del Estudiante:
-              </h3>
+            <div className="mt-6 space-y-6 pt-6 border-t">
+              <span className='block font-medium'>
+                Información del Estudiante
+              </span>
               {fields.map((_, index) => (
-                <ChildForm key={index} control={control} index={index} />
+                <div className="border pb-6 p-4 rounded-lg">
+                  <ChildForm key={index} control={control} index={index} />
+                </div>
               ))}
             </div>
           )}
@@ -164,13 +171,11 @@ export function ParentForm({ control }: ParentFormProps) {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  <a href="/terms/apafa" className="underline">
-                    Términos y Condiciones
-                  </a>
+                  Terminos y Condiciones
                 </FormLabel>
                 <FormDescription>
-                  Confirmo que he leído, comprendido y acepto los términos y
-                  condiciones.
+                  You can manage your
+                  <a href="/examples/forms"> mobile settings</a> page.
                 </FormDescription>
               </div>
             </FormItem>

@@ -11,10 +11,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   data.children_data = children_data
 
   const { error } = await supabase.from('temp_data').insert({
-    dni: data.dni,
-    first_names: data.first_names,
+    identity_card: data.identity_card,
+    names: data.names,
     last_names: data.last_names,
-    date_of_birth: data.date_of_birth,
+    dob: data.dob,
     phone: data.phone,
     email: data.email,
     address: data.address,

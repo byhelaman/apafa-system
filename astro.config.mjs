@@ -13,6 +13,7 @@ export default defineConfig({
     }),
   ],
   server: { port: 3000 },
+  prefetch: true,
   output: 'server',
   redirects: {
     '/signout': '/api/auth/signout',

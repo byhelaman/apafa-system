@@ -1,3 +1,4 @@
+import { Badge } from '@/components/ui/badge'
 import { DateField } from '../../fields/DateField'
 import { InputField } from '../../fields/InputField'
 import { SelectField } from '../../fields/SelectField'
@@ -10,48 +11,51 @@ interface ChildFormProps {
 export function ChildForm({ control, index }: ChildFormProps) {
   return (
     <>
-      <div className="space-y-2">
-        <h3 className="font-medium text-lg mb-4">Estudiante {index + 1}</h3>
+      <div className="space-y-3">
+        <Badge>Estudiante {index + 1}</Badge>
         <SelectField
           control={control}
           name={`children_data.${index}.relationship_type`}
+          label='Relación con el estudiante'
+          placeholder='Seleccionar'
           options={[
             { value: 'apoderado', label: 'Apoderado' },
             { value: 'padre', label: 'Padre' },
             { value: 'madre', label: 'Madre' },
             { value: 'tutor', label: 'Tutor' },
           ]}
-          placeholder="Relación con el estudiante"
         />
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex flex-col sm:flex-row gap-3">
           <InputField
             control={control}
-            name={`children_data.${index}.first_names`}
-            placeholder="Nombres"
+            name={`children_data.${index}.names`}
+            label="Nombres"
           />
           <InputField
             control={control}
             name={`children_data.${index}.last_names`}
-            placeholder="Apellidos"
+            label="Apellidos"
           />
         </div>
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex flex-col sm:flex-row gap-3">
           <InputField
             control={control}
-            name={`children_data.${index}.dni`}
+            name={`children_data.${index}.identity_card`}
+            label="Identificación (DNI)"
             maxLength={8}
-            placeholder="DNI"
           />
           <DateField
             control={control}
-            name={`children_data.${index}.date_of_birth`}
-            placeholder="Fecha de nac."
+            name={`children_data.${index}.dob`}
+            label='Fecha de Nac.'
+            placeholder='Seleccionar'
           />
         </div>
         <InputField
           control={control}
           name={`children_data.${index}.school_grade`}
-          placeholder="Grado y Sección"
+          label="Grado y Sección"
+          placeholder='Ej: 1ro A Secundaria'
         />
       </div>
     </>

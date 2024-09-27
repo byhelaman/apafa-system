@@ -13,11 +13,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { toast } from '@/components/ui/use-toast'
 import { Form } from '@/components/ui/form'
 
 import { Separator } from '@/components/ui/separator'
-import { InputField } from '../fields/InputField'
+import { InputField } from '@/components/fields/InputField'
 import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
 
@@ -71,15 +70,6 @@ export function CardForm() {
       location.href = json.redirect
       // setLoading(false);
     }
-
-    toast({
-      title: json.message,
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
   }
 
   return (
@@ -87,7 +77,7 @@ export function CardForm() {
       <CardHeader className='space-y-2'>
         <CardTitle>APAFA145</CardTitle>
         <CardDescription>
-          Bienvenido! Por favor, ingresa tus credenciales para acceder al sistema.
+          Bienvenido al sistema de gestión de la APAFA! Por favor, ingresa tus credenciales.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -121,7 +111,7 @@ export function CardForm() {
           {
             tabValue === 'partner' && <span className='block my-6 text-sm text-muted-foreground text-center'>
               No tiene una cuenta? <Button variant="link" className='p-0 h-auto'>
-                <a href="/register" className='font-medium'>Regístrese</a>
+                <a href="/register" className='font-medium' data-astro-prefetch>Regístrese</a>
               </Button>
             </span>
           }

@@ -1,25 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { RegisterForm } from "@/components/forms/RegisterForm";
-import { Header } from '@/components/Header';
-
-// const { isAuthenticated, userRole } = Astro.locals.auth
 
 ---
 
 <Layout title="Registrarse | APAFA">
-  <section class="w-full max-w-2xl px-6 mx-auto flex flex-col gap-16">
-    <div class="my-5">
-      <!-- <Header data={{isAuthenticated, userRole}} client:load /> -->
-    </div>
-    <div class="pb-10">
-      <div class="mb-6">
-        <h2 class="text-3xl font-bold mb-2">Registro en línea</h2>
-      <p class="text-lg leading-6">Para los nuevos miembros de la APAFA</p>
-      </div>
-      <div class="pt-6 border-t-[1px]">
+  <div class="h-screen w-screen grid" id="content">
+    <section class="w-full max-w-[680px] mx-auto">
+      <div class="my-14">
         <RegisterForm client:load/>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </Layout>
