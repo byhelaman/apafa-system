@@ -1,14 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { RegisterForm } from "@/components/forms/RegisterForm";
-
+import { Header } from "@/components/Header";
 ---
 
 <Layout title="Registrarse | APAFA">
   <div class="h-screen w-screen grid" id="content">
     <section class="w-full max-w-[680px] mx-auto">
-      <div class="my-14">
-        <RegisterForm client:load/>
+      <Header client:load />
+      <div class="my-14 px-4">
+        <RegisterForm client:load />
       </div>
     </section>
   </div>

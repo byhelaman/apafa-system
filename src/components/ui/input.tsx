@@ -17,7 +17,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <>
-        <div className="relative flex items-center">
+        <div className="w-full relative flex items-center">
           <input
             type={type === 'password' && showPassword ? 'text' : type}
             className={cn(

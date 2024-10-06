@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+import { type Partner, columns } from "./payments/columns"
+import { DataTable } from "./payments/data-table"
+
 import {
   Card,
   CardContent,
@@ -8,9 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
-import { Button } from "./ui/button";
 
 interface DashboardProps {
   role: string
@@ -44,24 +44,10 @@ export function Dashboard({ role }: DashboardProps) {
               <CardTitle>Solicitudes Pendientes</CardTitle>
               <CardDescription>Recent orders from your store.</CardDescription>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {data.map((item, index) => (
-                <Card className="w-full" key={index}>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">{format(item.enrollment_date, 'P', { locale: es })}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-xl font-bold truncate">{`${item.names} ${item.last_names}`}</div>
-                    <p className="text-xs text-muted-foreground">DNI{item.identity_card}</p>
-                  </CardContent>
-                  <CardFooter>
-                    <Button size="sm" variant="outline" className="w-full">Detalles</Button>
-                  </CardFooter>
-                </Card>
-              ))}
+            <CardContent>
+              <DataTable columns={columns} data={data} />
             </CardContent>
           </Card>
-
         ) : (
           <Card>
             <CardHeader className="px-7">

@@ -12,7 +12,6 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const password = inputPassword || inputDNI
 
   const { data, error: errorSignIn } = await supabase.auth.signInWithPassword({ email, password })
-  console.log(errorSignIn?.message);
 
   if (errorSignIn) {
     return new Response(

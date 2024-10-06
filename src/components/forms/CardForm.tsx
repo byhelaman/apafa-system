@@ -24,7 +24,7 @@ const PartnerSchema = z.object({
   code: z
     .string()
     .min(1, { message: 'El código de registro es obligatorio.' })
-    .max(9, {
+    .max(8, {
       message: 'El código de registro debe contener hasta 6 caracteres.',
     }),
 
@@ -77,7 +77,7 @@ export function CardForm() {
       <CardHeader className='space-y-2'>
         <CardTitle>APAFA145</CardTitle>
         <CardDescription>
-          Bienvenido al sistema de gestión de la APAFA! Por favor, ingresa tus credenciales.
+          Una iniciativa destinada a fomentar la participación de los padres de familia.
         </CardDescription>
       </CardHeader>
       <CardContent>
