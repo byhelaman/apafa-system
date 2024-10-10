@@ -31,16 +31,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, CirclePlusIcon, PlusIcon } from "lucide-react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  onDataChange: (newData: TData[]) => void
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onDataChange,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -70,6 +72,20 @@ export function DataTable<TData, TValue>({
         pageSize: 5
       },
     },
+    meta: {
+      updateData: (rowIndex: number, columnId: string, value: any) => {
+        onDataChange(
+          data.map((row, index) =>
+            index === rowIndex
+              ? {
+                ...data[rowIndex],
+                [columnId]: value,
+              }
+              : row
+          )
+        )
+      },
+    },
   })
 
   return (
@@ -83,32 +99,10 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu> */}
+        <Button size="sm">
+          {/* <CirclePlusIcon className="h-4 w-4 mr-2" /> */}
+          <a href="/register">Nuevo registro</a>
+        </Button>
       </div>
       <div className="rounded-md border">
         <Table>

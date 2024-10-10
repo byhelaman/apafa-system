@@ -21,12 +21,12 @@ import {
 const formSchema = z.object({
   identity_card: z
     .string()
-    .length(8, { message: 'DNI debe tener exactamente 8 caracteres' }),
+    .length(8, { message: 'DNI debe contener 8 caracteres' }),
   names: z.string().min(1, { message: 'Campo requerido' }),
   last_names: z.string().min(1, { message: 'Campo requerido' }),
   dob: z.date({ message: 'Campo requerido' }),
   phone: z.string().length(9, {
-    message: 'Número de teléfono debe tener exactamente 9 caracteres',
+    message: 'Número de teléfono debe contener 9 caracteres',
   }),
   email: z.string().email({ message: 'Correo electrónico inválido' }),
   address: z
@@ -45,7 +45,7 @@ const formSchema = z.object({
         last_names: z.string().min(1, { message: 'Campo requerido' }),
         identity_card: z
           .string()
-          .min(8, { message: 'DNI debe tener al menos 8 caracteres' }),
+          .min(8, { message: 'DNI debe contener 8 caracteres' }),
         dob: z.date({ message: 'Campo requerido' }),
         school_grade: z.string().min(1, { message: 'Campo requerido' }),
         health_info: z.string().max(200).optional(),

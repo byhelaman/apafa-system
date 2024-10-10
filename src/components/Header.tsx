@@ -23,7 +23,7 @@ interface HeaderProps {
 export function Header({ role, name }: HeaderProps) {
 
   return (
-    <header className="sticky top-5 h-10 px-6">
+    <header className="sticky top-5 h-10 px-6 z-50">
       <nav className="h-full border rounded-md flex items-center justify-between gap-2 px-4 pr-1.5 bg-background ">
         <a href="/" className="text-sm font-semibold">APAFA145</a>
         {
@@ -37,30 +37,6 @@ export function Header({ role, name }: HeaderProps) {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>{name}</DropdownMenuLabel>
-                <DropdownMenuGroup>
-                  {role === 'admin' && (
-                    <DropdownMenuSub>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuSubTrigger>
-                        <span>Ajustes</span>
-                      </DropdownMenuSubTrigger>
-                      <DropdownMenuPortal>
-                        <DropdownMenuSubContent>
-                          <DropdownMenuItem>
-                            <span>Actividades</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <span>Asociados</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem>
-                            <a href="/register">Nuevo registro</a>
-                          </DropdownMenuItem>
-                        </DropdownMenuSubContent>
-                      </DropdownMenuPortal>
-                    </DropdownMenuSub>
-                  )}
-                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <a href="/signout">Cerrar Sesión</a>

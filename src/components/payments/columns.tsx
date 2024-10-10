@@ -15,20 +15,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { format } from "date-fns"
+import { format, set } from "date-fns"
 import { es } from "date-fns/locale"
 
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+import { useEffect, useState } from "react"
+import { toast } from "../ui/use-toast"
 
 export type Partner = {
   partner_id: string,
@@ -47,7 +47,7 @@ export type Partner = {
   enrollment_date: string,
 }
 
-export const columns: ColumnDef<Partner>[] = [
+export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -122,9 +122,33 @@ export const columns: ColumnDef<Partner>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const partner = row.original
+      const [isOpen, setIsOpen] = useState(false)
+
+      const fetchData = async (id: string) => {
+        const response = await fetch('/api/requests', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ partner_id: id }),
+        });
+
+        const result = await response.json();
+        const message = result.error ?? result.message
+
+        toast({
+          description: message,
+        });
+      };
+
+      const handleAccept = async () => {
+        await fetchData(partner.partner_id);
+        setIsOpen(false);
+        refreshData();
+      };
 
       return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger>
             <Button variant="outline" size="sm">Ver detalles</Button>
           </DialogTrigger>
@@ -132,10 +156,13 @@ export const columns: ColumnDef<Partner>[] = [
             <DialogHeader>
               <DialogTitle>{partner.identity_card}</DialogTitle>
               <DialogDescription>
-                This action cannot be undone. This will permanently delete your account
-                and remove your data from our servers.
+                This action cannot be undone.
               </DialogDescription>
             </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsOpen(false)}>Cancelar</Button>
+              <Button onClick={handleAccept}>Aceptar</Button>
+            </DialogFooter>
           </DialogContent>
         </Dialog>
       )

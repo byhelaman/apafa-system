@@ -22,6 +22,7 @@ interface SelectFieldProps {
   className?: string
   options: Options[]
   placeholder?: string
+  defaultValue?: string
 }
 
 export function SelectField({
@@ -31,6 +32,7 @@ export function SelectField({
   className,
   options,
   placeholder,
+  defaultValue,
 }: SelectFieldProps) {
   return (
     <FormField
@@ -41,7 +43,7 @@ export function SelectField({
           <FormLabel>{label}</FormLabel>
           <Select
             onValueChange={(value) => field.onChange(value)}
-            defaultValue={field.value}
+            defaultValue={field.value || defaultValue}
           >
             <FormControl>
               <SelectTrigger className={className}>

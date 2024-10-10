@@ -69,7 +69,7 @@ export function MemberCard() {
       if (result.length < 2) {
         setHasMore(false);
       }
-      
+
       setData(prevData => {
         const newData = result.filter((profile: Profile) => !prevData.some(p => p.partner_id === profile.partner_id));
         return [...prevData, ...newData];
@@ -141,7 +141,7 @@ export function MemberCard() {
           }
         </CollapsibleContent>
       </Collapsible>
-      
+
       {/* {loading && hasMore && (
         <div className="text-center mt-4">
           <Button disabled>

@@ -1,64 +1,87 @@
-import { useEffect, useState } from "react";
+'use client'
 
-import { type Partner, columns } from "./payments/columns"
+import { useEffect, useState, useCallback } from "react"
+
+import { type Partner, createColumns } from "./payments/columns"
 import { DataTable } from "./payments/data-table"
 
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface DashboardProps {
   role: string
 }
 
 export function Dashboard({ role }: DashboardProps) {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Partner[]>([])
+
+  const fetchData = useCallback(async () => {
+    if (role === 'admin') {
+      const response = await fetch('/api/requests')
+      const data = await response.json()
+      setData(data)
+    } else {
+      const response = await fetch('/api/partner')
+      const [data] = await response.json()
+      setData(data)
+    }
+  }, [role])
 
   useEffect(() => {
-    async function fetchData() {
-      if (role !== 'admin') {
-        const response = await fetch('/api/partner')
-        const [data] = await response.json();
-        setData(data);
-      }
+    fetchData()
+  }, [fetchData])
 
-      const response = await fetch('/api/requests')
-      const data = await response.json();
-      setData(data);
-    }
+  const refreshData = useCallback(() => {
+    fetchData()
+  }, [fetchData])
 
-    fetchData();
-  }, []);
+  const columns = createColumns(refreshData)
 
   return (
-    <>
-      <div className="mt-10 px-6">
-        {role === 'admin' ? (
-          <Card>
-            <CardHeader className="px-7">
-              <CardTitle>Solicitudes Pendientes</CardTitle>
-              <CardDescription>Recent orders from your store.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <DataTable columns={columns} data={data} />
-            </CardContent>
-          </Card>
-        ) : (
-          <Card>
-            <CardHeader className="px-7">
-              <CardTitle>Actividades</CardTitle>
-              <CardDescription>Recent orders from your store.</CardDescription>
-            </CardHeader>
-            <CardContent>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-    </>
-  );
+    <div className="mt-10 px-6">
+      {role === 'admin' ? (
+        <Card>
+          <CardHeader className="px-7">
+            <CardTitle>Panel de Control</CardTitle>
+            <CardDescription>Solicitudes recientes de socios.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Tabs defaultValue="requests" className="w-full  ">
+              <TabsList>
+                <TabsTrigger value="requests">Solicitudes</TabsTrigger>
+                <TabsTrigger value="events">Actividades</TabsTrigger>
+                <TabsTrigger value="users">Usuarios</TabsTrigger>
+              </TabsList>
+              <TabsContent value="requests">
+                <DataTable columns={columns} data={data} onDataChange={setData} />
+              </TabsContent>
+              <TabsContent value="events">
+                @actividades
+              </TabsContent>
+              <TabsContent value="users">
+                @users
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card>
+          <CardHeader className="px-7">
+            <CardTitle>Actividades</CardTitle>
+            <CardDescription>Tus actividades recientes.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {/* Add content for non-admin users here */}
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  )
 }
