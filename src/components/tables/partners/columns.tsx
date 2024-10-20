@@ -28,7 +28,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useEffect, useState } from "react"
-import { toast } from "../ui/use-toast"
+import { toast } from "@/components/ui/use-toast"
 
 export type Partner = {
   partner_id: string,
@@ -105,19 +105,6 @@ export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => 
     cell: ({ row }) => <div>DNI{row.getValue("identity_card")}</div>,
   },
   {
-    accessorKey: "children",
-    header: "Registros",
-    cell: ({ row }) => {
-      const children = row.getValue("children") as [];
-      return <div className="lowercase">+{children.length} hijo(s)</div>;
-    },
-  },
-  {
-    accessorKey: "status",
-    header: "Estado",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>,
-  },
-  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -125,19 +112,12 @@ export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => 
       const [isOpen, setIsOpen] = useState(false)
 
       const fetchData = async (id: string) => {
-        const response = await fetch('/api/requests', {
-          method: 'POST',
+        const response = await fetch('/api/users', {
+          method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ partner_id: id }),
-        });
-
-        const result = await response.json();
-        const message = result.error ?? result.message
-
-        toast({
-          description: message,
         });
       };
 
@@ -148,23 +128,26 @@ export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => 
       };
 
       return (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger>
-            <Button variant="outline" size="sm">Ver detalles</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{partner.identity_card}</DialogTitle>
-              <DialogDescription>
-                This action cannot be undone.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsOpen(false)}>Cancelar</Button>
-              <Button onClick={handleAccept}>Aceptar</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm">Editar</Button>
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger>
+              <Button variant="outline" size="sm">Eliminar</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Confirmar eliminación</DialogTitle>
+                <DialogDescription>
+                  This action cannot be undone.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsOpen(false)}>Cancelar</Button>
+                <Button onClick={handleAccept}>Eliminar</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       )
     },
   },

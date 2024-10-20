@@ -2,8 +2,11 @@
 
 import { useEffect, useState, useCallback } from "react"
 
-import { type Partner, createColumns } from "./payments/columns"
-import { DataTable } from "./payments/data-table"
+import { type Request, createColumns as createRequestColumns } from "./tables/requests/columns"
+import { RequestsTable } from "./tables/requests/data-table"
+
+import { type User, createColumns as createUserColumns } from "./tables/users/columns"
+import { UserTable } from "./tables/users/data-table"
 
 import {
   Card,
@@ -20,19 +23,26 @@ interface DashboardProps {
 }
 
 export function Dashboard({ role }: DashboardProps) {
-  const [data, setData] = useState<Partner[]>([])
+  const [requestData, setRequestsData] = useState<Request[]>([])
+  const [userData, setUsersData] = useState<User[]>([])
 
   const fetchData = useCallback(async () => {
     if (role === 'admin') {
-      const response = await fetch('/api/requests')
-      const data = await response.json()
-      setData(data)
+      const requestsResponse = await fetch('/api/requests')
+      const usersResponse = await fetch('/api/users')
+
+      const requestsData = await requestsResponse.json();
+      const usersData = await usersResponse.json();
+
+      setRequestsData(requestsData);
+      setUsersData(usersData);
     } else {
-      const response = await fetch('/api/partner')
-      const [data] = await response.json()
-      setData(data)
+      const partnerResponse = await fetch('/api/partner')
+      const [partnerData] = await partnerResponse.json()
+      setRequestsData(partnerData)
     }
-  }, [role])
+
+  }, [])
 
   useEffect(() => {
     fetchData()
@@ -42,7 +52,8 @@ export function Dashboard({ role }: DashboardProps) {
     fetchData()
   }, [fetchData])
 
-  const columns = createColumns(refreshData)
+  const requestColumns = createRequestColumns(refreshData);
+  const userColumns = createUserColumns(refreshData);
 
   return (
     <div className="mt-10 px-6">
@@ -60,13 +71,13 @@ export function Dashboard({ role }: DashboardProps) {
                 <TabsTrigger value="users">Usuarios</TabsTrigger>
               </TabsList>
               <TabsContent value="requests">
-                <DataTable columns={columns} data={data} onDataChange={setData} />
+                <RequestsTable columns={requestColumns} data={requestData} onDataChange={setRequestsData} />
               </TabsContent>
               <TabsContent value="events">
                 @actividades
               </TabsContent>
               <TabsContent value="users">
-                @users
+                <UserTable columns={userColumns} data={userData} onDataChange={setUsersData} />
               </TabsContent>
             </Tabs>
           </CardContent>

@@ -18,9 +18,10 @@ import {
 interface HeaderProps {
   role?: string
   name?: string
+  path?: string
 }
 
-export function Header({ role, name }: HeaderProps) {
+export function Header({ role, name, path }: HeaderProps) {
 
   return (
     <header className="sticky top-5 h-10 px-6 z-50">
@@ -37,6 +38,22 @@ export function Header({ role, name }: HeaderProps) {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>{name}</DropdownMenuLabel>
+                {
+                  role === 'admin' && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>
+                        {
+                          path !== '/partners' ? (
+                            <a href="/partners">Asociados</a>
+                          ) : (
+                            <a href="/home">Panel Control</a>
+                          )
+                        }
+                      </DropdownMenuItem>
+                    </>
+                  )
+                }
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <a href="/signout">Cerrar Sesión</a>

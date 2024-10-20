@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Header } from "@/components/Header";
+import { Panel } from "@/components/Panel";
+
+const { role, userName } = Astro.locals.auth;
+const path = Astro.url.pathname;
+---
+
+<Layout title="Home | APAFA">
+  <section class="w-full max-w-5xl mx-auto">
+    <Header role={role} name={userName} path={path} client:load />
+    <Panel role={role} client:load />
+  </section>
+</Layout>

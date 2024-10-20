@@ -4,7 +4,7 @@ import { jwtDecode, type JwtPayload } from 'jwt-decode'
 
 const ROUTES = {
   USER: ['/home', '/members', '/settings'],
-  ADMIN: ['/members', '/settings', '/api/profiles', '/api/members'],
+  ADMIN: ['/partners', '/members', '/settings', '/api/profiles', '/api/members'],
 }
 
 interface DecodedJwtPayload extends JwtPayload {
@@ -60,9 +60,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
       return Response.redirect(new URL('/', context.url), 302)
     }
 
-    // if (context.locals.auth.role !== 'admin') {
-    //   return Response.redirect(new URL('/home', context.url), 302)
-    // }
+    if (context.locals.auth.role !== 'admin') {
+      return Response.redirect(new URL('/home', context.url), 302)
+    }
   }
 
   return await next()

@@ -16,11 +16,15 @@ import {
 
 import { Button } from "@/components/ui/button"
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
 import { Input } from "@/components/ui/input"
 
 import {
@@ -39,7 +43,7 @@ interface DataTableProps<TData, TValue> {
   onDataChange: (newData: TData[]) => void
 }
 
-export function DataTable<TData, TValue>({
+export function UserTable<TData, TValue>({
   columns,
   data,
   onDataChange,
@@ -92,17 +96,35 @@ export function DataTable<TData, TValue>({
     <>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filtrar por nombres..."
-          value={(table.getColumn("full_name")?.getFilterValue() as string) ?? ""}
+          placeholder="Buscar..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("full_name")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
-        <Button size="sm">
-          {/* <CirclePlusIcon className="h-4 w-4 mr-2" /> */}
+        {/* <Button size="sm">
+          <CirclePlusIcon className="h-4 w-4 mr-2" />
           <a href="/register">Nuevo registro</a>
-        </Button>
+        </Button> */}
+
+        <Dialog>
+          <DialogTrigger>
+            <Button size="sm">Nuevo usuario</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Agregar Usuario</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline">Cancelar</Button>
+              <Button>Eliminar</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
       <div className="rounded-md border">
         <Table>
