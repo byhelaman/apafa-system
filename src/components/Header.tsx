@@ -61,7 +61,7 @@ export function Header({ role, name, path }: HeaderProps) {
               </DropdownMenuContent>
             </Dropdown>
           ) : (
-            <Button variant="ghost" className="h-auto p-2 aspect-square" onClick={() => window.location.href = '/'}>
+            <Button variant="ghost" className="h-auto p-2 aspect-square" onClick={() => window.location.href = '/intranet'}>
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Button>

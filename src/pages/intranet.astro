@@ -1,0 +1,22 @@
+---
+import { CardForm } from "@/components/forms/CardForm";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Intranet | APAFA145">
+  <div class="h-screen w-screen grid place-content-center" id="content">
+    <section class="w-full max-w-96 mx-auto">
+      <div class="min-h-[600px] my-14">
+        <CardForm client:load />
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  #content {
+    @media (max-height: 680px) {
+      place-content: start center;
+    }
+  }
+</style>

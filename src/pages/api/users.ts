@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { supabase, supabaseClient } from "@/lib/supabase";
 
 export const GET: APIRoute = async ({ }) => {
-  const { data, error } = await supabase.from('user_profiles').select('*')
+  const { data, error } = await supabase.from('user_profiles').select('*').neq('role', 'asociado')
 
   if (error) {
     return new Response(JSON.stringify({ error: error.message }), { status: 500 });

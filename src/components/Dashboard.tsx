@@ -67,14 +67,10 @@ export function Dashboard({ role }: DashboardProps) {
             <Tabs defaultValue="requests" className="w-full  ">
               <TabsList>
                 <TabsTrigger value="requests">Solicitudes</TabsTrigger>
-                <TabsTrigger value="events">Actividades</TabsTrigger>
                 <TabsTrigger value="users">Usuarios</TabsTrigger>
               </TabsList>
               <TabsContent value="requests">
                 <RequestsTable columns={requestColumns} data={requestData} onDataChange={setRequestsData} />
-              </TabsContent>
-              <TabsContent value="events">
-                @actividades
               </TabsContent>
               <TabsContent value="users">
                 <UserTable columns={userColumns} data={userData} onDataChange={setUsersData} />

@@ -75,13 +75,13 @@ export const createColumns = (refreshData: () => void): ColumnDef<User>[] => [
       <div className="capitalize">{row.getValue("role")}</div>
     ),
   },
-  {
-    accessorKey: "reg_code",
-    header: "Código de registro",
-    cell: ({ row }) => (
-      <div className="">{row.getValue("reg_code") ?? '---'}</div>
-    ),
-  },
+  // {
+  //   accessorKey: "reg_code",
+  //   header: "Código de registro",
+  //   cell: ({ row }) => (
+  //     <div className="">{row.getValue("reg_code") ?? '---'}</div>
+  //   ),
+  // },
   {
     id: "actions",
     enableHiding: false,
