@@ -23,10 +23,9 @@ export function Panel({ role }: DashboardProps) {
 
   const fetchData = useCallback(async () => {
     if (role === 'admin') {
-      const requestsResponse = await fetch('/api/requests')
+      const requestsResponse = await fetch('/api/partners')
 
       const requestsData = await requestsResponse.json();
-
       setPartnerData(requestsData);
     }
 

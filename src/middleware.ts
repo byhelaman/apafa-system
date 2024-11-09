@@ -4,7 +4,7 @@ import { jwtDecode, type JwtPayload } from 'jwt-decode'
 
 const ROUTES = {
   USER: ['/home', '/members', '/settings'],
-  ADMIN: ['/partners', '/members', '/settings', '/api/profiles', '/api/members'],
+  ADMIN: ['/partners', '/members', '/settings', '/api/profiles', '/api/members', '/api/partners'],
 }
 
 interface DecodedJwtPayload extends JwtPayload {

@@ -33,6 +33,7 @@ import { toast } from "@/components/ui/use-toast"
 export type Partner = {
   partner_id: string,
   identity_card: string,
+  reg_code: string,
   names: string,
   last_names: string,
   dob: string,
@@ -44,7 +45,7 @@ export type Partner = {
   marital_status: string,
   children: [],
   status: string,
-  enrollment_date: string,
+  created_at: string,
 }
 
 export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => [
@@ -71,10 +72,10 @@ export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => 
     enableHiding: false,
   },
   {
-    accessorKey: "enrollment_date",
-    header: "Inscripción",
+    accessorKey: "created_at",
+    header: "",
     cell: ({ row }) => (
-      <div className="capitalize">{format(row.getValue("enrollment_date"), 'P', { locale: es })}</div>
+      <div className="capitalize">{format(row.getValue("created_at"), 'P', { locale: es })}</div>
     ),
   },
   {
