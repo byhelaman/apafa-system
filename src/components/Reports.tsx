@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card"
 
 import { Button } from "./ui/button"
+import { Download } from "lucide-react"
 
 interface DashboardReportProps {
   role: string
@@ -40,7 +41,7 @@ export function DashboardReport({ role }: DashboardReportProps) {
     if (role === 'admin') {
       const reportPartners = await fetch('/api/partners')
       const json = await reportPartners.json()
-      setPartners(json)  // Guardamos los datos de los socios en el estado
+      setPartners(json)
     }
   }, [role])
 
@@ -129,10 +130,10 @@ export function DashboardReport({ role }: DashboardReportProps) {
             <CardDescription>Solicitudes recientes de socios.</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex">
-              <Button variant="link" onClick={generatePDF}>Generar reporte de asociados</Button>
-              <Button variant="link">Generar reporte de usuarios</Button>
-              <Button variant="link">Generar reporte de actividades</Button>
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" onClick={generatePDF}> <Download className="mr-1" /> Generar reporte de asociados</Button>
+              <Button variant="outline"><Download className="mr-1" />Generar reporte de usuarios</Button>
+              <Button variant="outline"><Download className="mr-1" />Generar reporte de actividades</Button>
             </div>
           </CardContent>
         </Card>

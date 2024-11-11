@@ -111,6 +111,7 @@ export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => 
     cell: ({ row }) => {
       const partner = row.original
       const [isOpen, setIsOpen] = useState(false)
+      const [isOpen2, setIsOpen2] = useState(false)
 
       const fetchData = async (id: string) => {
         const response = await fetch('/api/partners', {
@@ -130,7 +131,33 @@ export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => 
 
       return (
         <div className="flex gap-2">
-          {/* <Button variant="outline" size="sm">Editar</Button> */}
+          <Dialog open={isOpen2} onOpenChange={setIsOpen2}>
+            <DialogTrigger>
+              <Button variant="outline" size="sm">Detalles</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{partner.names} {partner.last_names}</DialogTitle>
+                <DialogDescription>
+                  {partner.reg_code}
+                </DialogDescription>
+              </DialogHeader>
+              <div>
+                <span>Hijos</span>
+                {
+                  partner.children.map((child: any) => (
+                    <div key={child.child_id}>
+                      <span>{child.names} {child.last_names}</span>
+                    </div>
+                  ))
+                }
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsOpen2(false)}>Cerrar</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger>
               <Button variant="outline" size="sm">Eliminar</Button>

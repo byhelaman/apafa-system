@@ -31,6 +31,7 @@ export function Panel({ role }: DashboardProps) {
       const requestsResponse = await fetch('/api/partners')
 
       const requestsData = await requestsResponse.json();
+      console.log(requestsData);
 
       setPartnerData(requestsData);
     }
