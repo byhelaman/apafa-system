@@ -30,7 +30,7 @@ import {
 import { useEffect, useState } from "react"
 import { toast } from "@/components/ui/use-toast"
 
-export type Partner = {
+export type Children = {
   partner_id: string,
   identity_card: string,
   reg_code: string,
@@ -48,7 +48,7 @@ export type Partner = {
   created_at: string,
 }
 
-export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => [
+export const createColumns = (refreshData: () => void): ColumnDef<Children>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -113,7 +113,7 @@ export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => 
       const [isOpen, setIsOpen] = useState(false)
 
       const fetchData = async (id: string) => {
-        const response = await fetch('/api/partners', {
+        const response = await fetch('/api/users', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

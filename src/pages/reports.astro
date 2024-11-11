@@ -1,14 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Header } from "@/components/Header";
-import { Dashboard } from "@/components/Dashboard";
+import { DashboardReport } from "@/components/Reports";
 
 const { role, userName } = Astro.locals.auth;
 ---
 
 <Layout title="Home | APAFA">
   <section class="w-full max-w-5xl mx-auto">
-    <Header role={role} name={userName} client:load />
-    <Dashboard role={role} client:load />
+    <Header role={role} name={userName} path="/reports" client:load />
+    <DashboardReport role={role} client:load />
   </section>
 </Layout>

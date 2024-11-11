@@ -20,3 +20,14 @@ export const GET: APIRoute = async ({ locals }: APIContext) => {
   return new Response(JSON.stringify(data), { status: 200 })
 }
 
+export const DELETE: APIRoute = async ({ request }) => {
+  const { partner_id } = await request.json();
+
+  const { error } = await supabase.from('partners').delete().eq('partner_id', partner_id)
+
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  }
+
+  return new Response(null, { status: 200 });
+}

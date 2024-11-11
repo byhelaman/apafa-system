@@ -5,6 +5,9 @@ import { useEffect, useState, useCallback } from "react"
 import { type Partner, createColumns as createPartnerColumns } from "./tables/partners/columns"
 import { PartnerTable } from "./tables/partners/data-table"
 
+import { type Children, createColumns as createChildrenColumns } from "./tables/children/columns"
+import { ChildrenTable } from "./tables/children/data-table"
+
 import {
   Card,
   CardContent,
@@ -13,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface DashboardProps {
   role: string
@@ -20,12 +24,14 @@ interface DashboardProps {
 
 export function Panel({ role }: DashboardProps) {
   const [partnerData, setPartnerData] = useState<Partner[]>([])
+  const [childrenData, setChildrenData] = useState<Children[]>([])
 
   const fetchData = useCallback(async () => {
     if (role === 'admin') {
       const requestsResponse = await fetch('/api/partners')
 
       const requestsData = await requestsResponse.json();
+
       setPartnerData(requestsData);
     }
 
@@ -40,6 +46,7 @@ export function Panel({ role }: DashboardProps) {
   }, [fetchData])
 
   const partnerColumns = createPartnerColumns(refreshData);
+  const childrenColumns = createPartnerColumns(refreshData);
 
   return (
     <div className="mt-10 px-6">
@@ -50,7 +57,18 @@ export function Panel({ role }: DashboardProps) {
             <CardDescription>Solicitudes recientes de socios.</CardDescription>
           </CardHeader>
           <CardContent>
-            <PartnerTable columns={partnerColumns} data={partnerData} onDataChange={setPartnerData} />
+            <Tabs defaultValue="requests" className="w-full  ">
+              <TabsList>
+                <TabsTrigger value="requests">Padres</TabsTrigger>
+                {/* <TabsTrigger value="users">Hijos</TabsTrigger> */}
+              </TabsList>
+              <TabsContent value="requests">
+                <PartnerTable columns={partnerColumns} data={partnerData} onDataChange={setPartnerData} />
+              </TabsContent>
+              <TabsContent value="users">
+                <ChildrenTable columns={childrenColumns} data={childrenData} onDataChange={setPartnerData} />
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       ) : (

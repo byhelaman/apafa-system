@@ -54,6 +54,13 @@ export function Header({ role, name, path }: HeaderProps) {
                     </>
                   )
                 }
+                {
+                  path !== '/reports' && (
+                    <DropdownMenuItem>
+                      <a href="/reports">Reportes</a>
+                    </DropdownMenuItem>
+                  )
+                }
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <a href="/signout">Cerrar Sesión</a>
