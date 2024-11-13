@@ -106,6 +106,13 @@ export const createColumns = (refreshData: () => void): ColumnDef<Partner>[] => 
     cell: ({ row }) => <div>DNI{row.getValue("identity_card")}</div>,
   },
   {
+    accessorKey: "reg_code",
+    header: "CR",
+    cell: ({ row }) => (
+      <div className="">{row.getValue("reg_code") ?? '---'}</div>
+    ),
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {

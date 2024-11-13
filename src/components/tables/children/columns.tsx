@@ -1,7 +1,7 @@
 "use client"
 
 import { type ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, Check, Search, X } from "lucide-react"
+import { ArrowRight, ArrowUpDown, Check, ChevronRight, ChevronsLeftRight, Search, X } from "lucide-react"
 import { MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -31,21 +31,15 @@ import { useEffect, useState } from "react"
 import { toast } from "@/components/ui/use-toast"
 
 export type Children = {
+  student_id: string,
   partner_id: string,
+  relationship_type: string,
   identity_card: string,
-  reg_code: string,
   names: string,
   last_names: string,
   dob: string,
-  phone: string,
-  email: string,
-  address: string,
-  education_level: string,
-  occupation: string,
-  marital_status: string,
-  children: [],
-  status: string,
-  created_at: string,
+  school_grade: string,
+  health_info: string,
 }
 
 export const createColumns = (refreshData: () => void): ColumnDef<Children>[] => [
@@ -70,13 +64,6 @@ export const createColumns = (refreshData: () => void): ColumnDef<Children>[] =>
     ),
     enableSorting: false,
     enableHiding: false,
-  },
-  {
-    accessorKey: "created_at",
-    header: "",
-    cell: ({ row }) => (
-      <div className="capitalize">{format(row.getValue("created_at"), 'P', { locale: es })}</div>
-    ),
   },
   {
     id: "full_name",
@@ -106,6 +93,11 @@ export const createColumns = (refreshData: () => void): ColumnDef<Children>[] =>
     cell: ({ row }) => <div>DNI{row.getValue("identity_card")}</div>,
   },
   {
+    accessorKey: "school_grade",
+    header: "Grado",
+    cell: ({ row }) => <div>{row.getValue("school_grade")}</div>,
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -133,7 +125,8 @@ export const createColumns = (refreshData: () => void): ColumnDef<Children>[] =>
           {/* <Button variant="outline" size="sm">Editar</Button> */}
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger>
-              <Button variant="outline" size="sm">Eliminar</Button>
+              <Button variant="outline" size="sm"><ArrowRight className="h-4 w-4" /></Button>
+
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

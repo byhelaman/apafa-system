@@ -28,12 +28,17 @@ export function Panel({ role }: DashboardProps) {
 
   const fetchData = useCallback(async () => {
     if (role === 'admin') {
-      const requestsResponse = await fetch('/api/partners')
+      const partnersResponse = await fetch('/api/partners')
+      const childrenResponse = await fetch('/api/children')
 
-      const requestsData = await requestsResponse.json();
-      console.log(requestsData);
+      console.log(childrenResponse);
 
-      setPartnerData(requestsData);
+
+      const c_data = await childrenResponse.json();
+      const p_data = await partnersResponse.json();
+
+      setChildrenData(c_data);
+      setPartnerData(p_data);
     }
 
   }, [])
@@ -47,7 +52,7 @@ export function Panel({ role }: DashboardProps) {
   }, [fetchData])
 
   const partnerColumns = createPartnerColumns(refreshData);
-  const childrenColumns = createPartnerColumns(refreshData);
+  const childrenColumns = createChildrenColumns(refreshData);
 
   return (
     <div className="mt-10 px-6">
@@ -61,13 +66,13 @@ export function Panel({ role }: DashboardProps) {
             <Tabs defaultValue="requests" className="w-full  ">
               <TabsList>
                 <TabsTrigger value="requests">Padres</TabsTrigger>
-                {/* <TabsTrigger value="users">Hijos</TabsTrigger> */}
+                <TabsTrigger value="users">Estudiantes</TabsTrigger>
               </TabsList>
               <TabsContent value="requests">
                 <PartnerTable columns={partnerColumns} data={partnerData} onDataChange={setPartnerData} />
               </TabsContent>
               <TabsContent value="users">
-                <ChildrenTable columns={childrenColumns} data={childrenData} onDataChange={setPartnerData} />
+                <ChildrenTable columns={childrenColumns} data={childrenData} onDataChange={setChildrenData} />
               </TabsContent>
             </Tabs>
           </CardContent>

@@ -132,7 +132,7 @@ export function DashboardReport({ role }: DashboardReportProps) {
           <CardContent>
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" onClick={generatePDF}> <Download className="mr-1" /> Generar reporte de asociados</Button>
-              <Button variant="outline"><Download className="mr-1" />Generar reporte de usuarios</Button>
+              <Button variant="outline"><Download className="mr-1" />Generar reporte de estudiantes</Button>
               <Button variant="outline"><Download className="mr-1" />Generar reporte de actividades</Button>
             </div>
           </CardContent>

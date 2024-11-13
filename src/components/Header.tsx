@@ -42,23 +42,41 @@ export function Header({ role, name, path }: HeaderProps) {
                   role === 'admin' && (
                     <>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        {
-                          path !== '/partners' ? (
-                            <a href="/partners">Asociados</a>
-                          ) : (
+                      {path === '/partners' ? (
+                        <>
+                          <DropdownMenuItem>
                             <a href="/home">Panel Control</a>
-                          )
-                        }
-                      </DropdownMenuItem>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <a href="/reports">Reportes</a>
+                          </DropdownMenuItem>
+                        </>
+                      ) : path === '/reports' ? (
+                        <>
+                          <DropdownMenuItem>
+                            <a href="/partners">Asociados</a>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <a href="/home">Panel Control</a>
+                          </DropdownMenuItem>
+                        </>
+                      ) : (
+                        <>
+                          <DropdownMenuItem>
+                            <a href="/partners">Asociados</a>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <a href="/reports">Reportes</a>
+                          </DropdownMenuItem>
+                        </>
+                      )}
                     </>
                   )
                 }
                 {
-                  path !== '/reports' && (
-                    <DropdownMenuItem>
-                      <a href="/reports">Reportes</a>
-                    </DropdownMenuItem>
+                  role === 'moderator' && (
+                    <>
+                    </>
                   )
                 }
                 <DropdownMenuSeparator />
@@ -68,7 +86,7 @@ export function Header({ role, name, path }: HeaderProps) {
               </DropdownMenuContent>
             </Dropdown>
           ) : (
-            <Button variant="ghost" className="h-auto p-2 aspect-square" onClick={() => window.location.href = '/intranet'}>
+            <Button variant="ghost" className="h-auto p-2 aspect-square" onClick={() => window.location.href = '/home'}>
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back</span>
             </Button>

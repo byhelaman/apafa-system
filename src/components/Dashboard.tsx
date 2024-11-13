@@ -5,8 +5,21 @@ import { useEffect, useState, useCallback } from "react"
 import { type Request, createColumns as createRequestColumns } from "./tables/requests/columns"
 import { RequestsTable } from "./tables/requests/data-table"
 
-import { type User, createColumns as createUserColumns } from "./tables/users/columns"
-import { UserTable } from "./tables/users/data-table"
+// import { type User, createColumns as createUserColumns } from "./tables/users/columns"
+// import { UserTable } from "./tables/users/data-table"
+
+import { type Activity, createColumns as createActivityColumns } from "./tables/activities/columns"
+import { ActivityTable } from "./tables/activities/data-table"
+
+import { type ActUser, createColumns as createActUserColumns } from "./tables/act-user/columns"
+import { ActUserTable } from "./tables/act-user/data-table"
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 import {
   Card,
@@ -24,19 +37,25 @@ interface DashboardProps {
 
 export function Dashboard({ role }: DashboardProps) {
   const [requestData, setRequestsData] = useState<Request[]>([])
-  const [userData, setUsersData] = useState<User[]>([])
+  const [activityData, setActivitiesData] = useState<Activity[]>([])
+  const [actUserData, setActUserData] = useState<ActUser[]>([])
 
   const fetchData = useCallback(async () => {
     if (role === 'admin') {
       const requestsResponse = await fetch('/api/requests')
-      const usersResponse = await fetch('/api/users')
+      const activitiesResponse = await fetch('/api/activities')
 
       const requestsData = await requestsResponse.json();
-      const usersData = await usersResponse.json();
+      const activitiesData = await activitiesResponse.json();
 
       setRequestsData(requestsData);
-      setUsersData(usersData);
+      setActivitiesData(activitiesData);
+
     } else {
+      const actUserResponse = await fetch('/api/activities')
+      const actUserData = await actUserResponse.json();
+      setActUserData(actUserData);
+
       const partnerResponse = await fetch('/api/partner')
       const [partnerData] = await partnerResponse.json()
       setRequestsData(partnerData)
@@ -53,10 +72,11 @@ export function Dashboard({ role }: DashboardProps) {
   }, [fetchData])
 
   const requestColumns = createRequestColumns(refreshData);
-  const userColumns = createUserColumns(refreshData);
+  const activitiesColumns = createActivityColumns(refreshData);
+  const actUserColumns = createActUserColumns(refreshData);
 
   return (
-    <div className="mt-10 px-6">
+    <div className="mt-10 px-6 pb-10">
       {role === 'admin' ? (
         <Card>
           <CardHeader className="px-7">
@@ -67,13 +87,24 @@ export function Dashboard({ role }: DashboardProps) {
             <Tabs defaultValue="requests" className="w-full  ">
               <TabsList>
                 <TabsTrigger value="requests">Solicitudes</TabsTrigger>
-                <TabsTrigger value="users">Usuarios</TabsTrigger>
+                <TabsTrigger value="activities">Actividades</TabsTrigger>
+                {/* <TabsTrigger value="users">Usuarios</TabsTrigger> */}
               </TabsList>
               <TabsContent value="requests">
                 <RequestsTable columns={requestColumns} data={requestData} onDataChange={setRequestsData} />
               </TabsContent>
-              <TabsContent value="users">
-                <UserTable columns={userColumns} data={userData} onDataChange={setUsersData} />
+              <TabsContent value="activities">
+                <div className="px-3 border rounded-md">
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1" className="border-none">
+                      <AccordionTrigger className="hover:no-underline text-sm py-3 text-left">Despliega para agregar una nueva actividad</AccordionTrigger>
+                      <AccordionContent>
+                        @form
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+                <ActivityTable columns={activitiesColumns} data={activityData} onDataChange={setActivitiesData} />
               </TabsContent>
             </Tabs>
           </CardContent>
@@ -85,7 +116,10 @@ export function Dashboard({ role }: DashboardProps) {
             <CardDescription>Tus actividades recientes.</CardDescription>
           </CardHeader>
           <CardContent>
+
+            <ActUserTable columns={actUserColumns} data={actUserData} onDataChange={setActUserData} />
             {/* Add content for non-admin users here */}
+
           </CardContent>
         </Card>
       )}

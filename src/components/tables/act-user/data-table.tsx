@@ -43,7 +43,7 @@ interface DataTableProps<TData, TValue> {
   onDataChange: (newData: TData[]) => void
 }
 
-export function ActivityTable<TData, TValue>({
+export function ActUserTable<TData, TValue>({
   columns,
   data,
   onDataChange,
@@ -101,26 +101,8 @@ export function ActivityTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="w-full"
         />
-
-        {/* <Dialog>
-          <DialogTrigger>
-            <Button size="sm">Nueva Actividad</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Agregar Usuario</DialogTitle>
-              <DialogDescription>
-                This action cannot be undone.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button variant="outline">Cancelar</Button>
-              <Button>Eliminar</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog> */}
       </div>
       <div className="rounded-md border">
         <Table>

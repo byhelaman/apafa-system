@@ -82,51 +82,51 @@ export const createColumns = (refreshData: () => void): ColumnDef<User>[] => [
   //     <div className="">{row.getValue("reg_code") ?? '---'}</div>
   //   ),
   // },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const user = row.original
-      const [isOpen, setIsOpen] = useState(false)
+  // {
+  //   id: "actions",
+  //   enableHiding: false,
+  //   cell: ({ row }) => {
+  //     const user = row.original
+  //     const [isOpen, setIsOpen] = useState(false)
 
-      const fetchData = async (id: string) => {
-        const response = await fetch('/api/users', {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ user_id: id }),
-        });
-      };
+  //     const fetchData = async (id: string) => {
+  //       const response = await fetch('/api/users', {
+  //         method: 'DELETE',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({ user_id: id }),
+  //       });
+  //     };
 
-      const handleAccept = async () => {
-        await fetchData(user.user_id);
-        setIsOpen(false);
-        refreshData();
-      };
+  //     const handleAccept = async () => {
+  //       await fetchData(user.user_id);
+  //       setIsOpen(false);
+  //       refreshData();
+  //     };
 
-      return (
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm">Editar</Button>
-          <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger>
-              <Button variant="outline" size="sm">Eliminar</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Confirmar eliminación</DialogTitle>
-                <DialogDescription>
-                  This action cannot be undone.
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setIsOpen(false)}>Cancelar</Button>
-                <Button onClick={handleAccept}>Eliminar</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
-      )
-    },
-  },
+  //     return (
+  //       <div className="flex gap-2">
+  //         <Button variant="outline" size="sm">Editar</Button>
+  //         <Dialog open={isOpen} onOpenChange={setIsOpen}>
+  //           <DialogTrigger>
+  //             <Button variant="outline" size="sm">Eliminar</Button>
+  //           </DialogTrigger>
+  //           <DialogContent>
+  //             <DialogHeader>
+  //               <DialogTitle>Confirmar eliminación</DialogTitle>
+  //               <DialogDescription>
+  //                 This action cannot be undone.
+  //               </DialogDescription>
+  //             </DialogHeader>
+  //             <DialogFooter>
+  //               <Button variant="outline" onClick={() => setIsOpen(false)}>Cancelar</Button>
+  //               <Button onClick={handleAccept}>Eliminar</Button>
+  //             </DialogFooter>
+  //           </DialogContent>
+  //         </Dialog>
+  //       </div>
+  //     )
+  //   },
+  // },
 ]
