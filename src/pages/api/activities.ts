@@ -41,3 +41,33 @@ export const PATCH: APIRoute = async ({ request }) => {
     return new Response(JSON.stringify({ error: 'Activity not found' }), { status: 404 });
   }
 }
+
+export const POST: APIRoute = async ({ request, redirect }) => {
+  const formData = await request.formData()
+
+  const data = Object.fromEntries(formData.entries())
+  // console.log(data);
+
+  const { error } = await supabase.from('activities').insert({
+    title: data.title,
+    description: data.description,
+    location: data.location,
+    activity_type: data.activity_type,
+  })
+
+  if (error) {
+    return new Response(
+      JSON.stringify({
+        error: error.message,
+        code: error.code,
+        message: 'Error al insertar datos',
+      }),
+      {
+        status: 400,
+      }
+    )
+  }
+  return new Response(JSON.stringify({ redirect: '/home', message: 'Success... 🥳' }), {
+    status: 200,
+  })
+}

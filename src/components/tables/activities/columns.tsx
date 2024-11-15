@@ -33,9 +33,9 @@ export type Activity = {
   title: string
   description: string
   activity_type: string
-  activity_date: string
-  start_time: string
-  end_time: string
+  activity_date: string | null
+  start_time: string | null
+  end_time: string | null
   location: string
   status: string
   created_at: string

@@ -1,26 +1,18 @@
 'use client'
 
 import { useEffect, useState, useCallback } from "react"
-
 import { type Request, createColumns as createRequestColumns } from "./tables/requests/columns"
 import { RequestsTable } from "./tables/requests/data-table"
-
-// import { type User, createColumns as createUserColumns } from "./tables/users/columns"
-// import { UserTable } from "./tables/users/data-table"
-
 import { type Activity, createColumns as createActivityColumns } from "./tables/activities/columns"
 import { ActivityTable } from "./tables/activities/data-table"
-
 import { type ActUser, createColumns as createActUserColumns } from "./tables/act-user/columns"
 import { ActUserTable } from "./tables/act-user/data-table"
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-
 import {
   Card,
   CardContent,
@@ -28,8 +20,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ActivityForm } from "./forms/ActivityForm"
 
 interface DashboardProps {
   role: string
@@ -45,35 +37,37 @@ export function Dashboard({ role }: DashboardProps) {
       const requestsResponse = await fetch('/api/requests')
       const activitiesResponse = await fetch('/api/activities')
 
-      const requestsData = await requestsResponse.json();
-      const activitiesData = await activitiesResponse.json();
+      const requestsData = await requestsResponse.json()
+      const activitiesData = await activitiesResponse.json()
 
-      setRequestsData(requestsData);
-      setActivitiesData(activitiesData);
-
+      setRequestsData(requestsData)
+      setActivitiesData(activitiesData)
     } else {
       const actUserResponse = await fetch('/api/activities')
-      const actUserData = await actUserResponse.json();
-      setActUserData(actUserData);
+      const actUserData = await actUserResponse.json()
+      setActUserData(actUserData)
 
       const partnerResponse = await fetch('/api/partner')
       const [partnerData] = await partnerResponse.json()
       setRequestsData(partnerData)
     }
-
-  }, [])
+  }, [role])
 
   useEffect(() => {
     fetchData()
   }, [fetchData])
 
+  const onDataChange = (newActivity: Activity) => {
+    setActivitiesData((prevActivities) => [...prevActivities, newActivity])
+  }
+
   const refreshData = useCallback(() => {
     fetchData()
   }, [fetchData])
 
-  const requestColumns = createRequestColumns(refreshData);
-  const activitiesColumns = createActivityColumns(refreshData);
-  const actUserColumns = createActUserColumns(refreshData);
+  const requestColumns = createRequestColumns(refreshData)
+  const activitiesColumns = createActivityColumns(refreshData)
+  const actUserColumns = createActUserColumns(refreshData)
 
   return (
     <div className="mt-10 px-6 pb-10">
@@ -84,11 +78,10 @@ export function Dashboard({ role }: DashboardProps) {
             <CardDescription>Solicitudes recientes de socios.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="requests" className="w-full  ">
+            <Tabs defaultValue="requests" className="w-full">
               <TabsList>
                 <TabsTrigger value="requests">Solicitudes</TabsTrigger>
                 <TabsTrigger value="activities">Actividades</TabsTrigger>
-                {/* <TabsTrigger value="users">Usuarios</TabsTrigger> */}
               </TabsList>
               <TabsContent value="requests">
                 <RequestsTable columns={requestColumns} data={requestData} onDataChange={setRequestsData} />
@@ -99,7 +92,7 @@ export function Dashboard({ role }: DashboardProps) {
                     <AccordionItem value="item-1" className="border-none">
                       <AccordionTrigger className="hover:no-underline text-sm py-3 text-left">Despliega para agregar una nueva actividad</AccordionTrigger>
                       <AccordionContent>
-                        @form
+                        <ActivityForm onDataChange={onDataChange} />
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
@@ -116,10 +109,7 @@ export function Dashboard({ role }: DashboardProps) {
             <CardDescription>Tus actividades recientes.</CardDescription>
           </CardHeader>
           <CardContent>
-
             <ActUserTable columns={actUserColumns} data={actUserData} onDataChange={setActUserData} />
-            {/* Add content for non-admin users here */}
-
           </CardContent>
         </Card>
       )}
