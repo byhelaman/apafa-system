@@ -47,7 +47,7 @@ const { title } = Astro.props;
 		<ViewTransitions />
 		<script is:inline src="/theme.js"></script>
 	</head>
-	<body>
+	<body class="bg-gradient-to-r from-blue-100 to-red-100">
 		<main>
 			<slot />
 		</main>
@@ -59,6 +59,7 @@ const { title } = Astro.props;
 	html {
 		font-family: "Archivo Variable", sans-serif;
 		scrollbar-width: none;
+		scroll-behavior: smooth;
 	}
 	.fz {
 		field-sizing: content;

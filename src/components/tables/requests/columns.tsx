@@ -141,8 +141,31 @@ export const createColumns = (refreshData: () => void): ColumnDef<Request>[] => 
         });
       };
 
+      const deleteRequest = async (id: string) => {
+        const response = await fetch('/api/requests', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ partner_id: id }),
+        });
+
+        const result = await response.json();
+        const message = result.error ?? result.message
+
+        toast({
+          description: message,
+        });
+      };
+
       const handleAccept = async () => {
         await fetchData(partner.partner_id);
+        setIsOpen(false);
+        refreshData();
+      };
+
+      const handleDelete = async () => {
+        await deleteRequest(partner.partner_id);
         setIsOpen(false);
         refreshData();
       };
@@ -160,7 +183,7 @@ export const createColumns = (refreshData: () => void): ColumnDef<Request>[] => 
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setIsOpen(false)}>Cancelar</Button>
+              <Button variant="outline" onClick={handleDelete}>Eliminar</Button>
               <Button onClick={handleAccept}>Aceptar</Button>
             </DialogFooter>
           </DialogContent>

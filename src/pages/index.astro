@@ -16,184 +16,195 @@ import { CheckCircle } from "lucide-react";
 ---
 
 <Layout title="APAFA145">
-  <div class="min-h-screen flex flex-col max-w-[1024px] mx-auto">
-    <Navigation client:load />
-    <main class="flex-1">
-      <section class="container px-4 py-12 md:py-24 lg:py-32">
-        <div class="flex flex-col items-center space-y-4 text-center">
-          <h1
-            class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl"
-          >
-            Comprometidos en mejorar la educación de nuestros hijos
-          </h1>
-          <p
-            class="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
-          >
-            La APAFA es el punto de encuentro entre padres, madres, maestros y
-            estudiantes para crear un ambiente escolar enriquecedor y de
-            colaboración.
-          </p>
-        </div>
-        <div class="flex flex-col items-center text-center mt-6">
-          <Button className="scale-110">
-            <a href="/register">Únete a APAFA145</a>
-          </Button>
-        </div>
-      </section>
+  <div class="bg-gradient-to-r from-blue-100 to-red-100">
+    <div class="min-h-screen flex flex-col max-w-[1024px] mx-auto">
+      <Navigation client:load />
+      <main class="flex-1">
+        <section class="container px-4 py-12 md:py-24 lg:py-24 fondo">
+          <div class="flex flex-col items-center space-y-4 text-center z-30">
+            <img
+              src="image145.png"
+              alt="Logo de APAFA145"
+              class="w-[120px] max-w-xs"
+            />
+            <h1
+              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl"
+            >
+              Comprometidos en mejorar la educación de nuestros hijos
+            </h1>
+            <p
+              class="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+            >
+              La APAFA es el punto de encuentro entre padres, madres, maestros y
+              estudiantes para crear un ambiente escolar enriquecedor y de
+              colaboración.
+            </p>
+          </div>
+          <div class="flex flex-col items-center text-center mt-6">
+            <Button className="scale-110">
+              <a href="/register">Únete a APAFA145</a>
+            </Button>
+          </div>
+        </section>
 
-      <section class="container px-4 pb-12">
-        <CarouselDemo client:load />
-      </section>
+        <section class="container px-4 pb-12">
+          <CarouselDemo client:load />
+        </section>
 
-      <section class="container px-4 py-12 md:py-24 lg:py-32">
-        <div class="grid gap-10 px-4 md:gap-16 lg:grid-cols-2">
-          <div class="space-y-6">
+        <section class="container px-4 py-12 md:py-24 lg:py-32" id="about-us">
+          <div class="grid gap-10 px-4 md:gap-16 lg:grid-cols-2">
+            <div class="space-y-6">
+              <h2
+                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+              >
+                ¿Qué es la APAFA145?
+              </h2>
+              <p
+                class="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+              >
+                La APAFA145 es la Asociación de Padres de Familia de la I.E.
+                145, una organización sin fines de lucro comprometida con el
+                mejoramiento de la calidad educativa y el bienestar de nuestros
+                estudiantes.
+              </p>
+              <Card className="bg-transparent">
+                <CardHeader>
+                  <CardTitle>Nuestra Misión</CardTitle>
+                  <CardDescription
+                    >Trabajamos en colaboración para:</CardDescription
+                  >
+                </CardHeader>
+                <CardContent>
+                  <ul class="space-y-2">
+                    <li class="flex items-center space-x-2">
+                      <CheckCircle className="text-green-500" />
+                      <span>Fortalecer la comunidad educativa</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                      <CheckCircle className="text-green-500" />
+                      <span
+                        >Apoyar iniciativas académicas y extracurriculares</span
+                      >
+                    </li>
+                    <li class="flex items-center space-x-2">
+                      <CheckCircle className="text-green-500" />
+                      <span
+                        >Fomentar la participación activa de las familias</span
+                      >
+                    </li>
+                    <li class="flex items-center space-x-2">
+                      <CheckCircle className="text-green-500" />
+                      <span
+                        >Mejorar la infraestructura y recursos escolares</span
+                      >
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+            <div class="flex flex-col justify-center space-y-6">
+              <Card className="bg-transparent">
+                <CardHeader>
+                  <CardTitle>¿Por qué unirte?</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p
+                    class="text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400"
+                  >
+                    Al ser parte de APAFA145, tendrás la oportunidad de:
+                  </p>
+                  <ul
+                    class="list-disc list-inside mt-4 space-y-2 text-gray-500 dark:text-gray-400"
+                  >
+                    <li>
+                      Influir en las decisiones que afectan la educación de tu
+                      hijo
+                    </li>
+                    <li>Participar en eventos y actividades escolares</li>
+                    <li>Colaborar con otros padres y educadores</li>
+                    <li>
+                      Contribuir al desarrollo integral de la comunidad escolar
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg">Únete a APAFA145</Button>
+                <Button size="lg" variant="outline">Conoce más</Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="container px-4 py-12 md:py-24 lg:py-32" id="faq">
+          <div class="mx-auto max-w-3xl space-y-4 text-center">
             <h2
               class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
             >
-              ¿Qué es la APAFA145?
+              ¿Qué Hacemos?
             </h2>
             <p
               class="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
             >
-              La APAFA145 es la Asociación de Padres de Familia de la I.E. 145,
-              una organización sin fines de lucro comprometida con el
-              mejoramiento de la calidad educativa y el bienestar de nuestros
-              estudiantes.
+              Descubre nuestras actividades y cómo contribuimos a la comunidad
+              escolar.
             </p>
-            <Card>
-              <CardHeader>
-                <CardTitle>Nuestra Misión</CardTitle>
-                <CardDescription
-                  >Trabajamos en colaboración para:</CardDescription
-                >
-              </CardHeader>
-              <CardContent>
-                <ul class="space-y-2">
-                  <li class="flex items-center space-x-2">
-                    <CheckCircle className="text-green-500" />
-                    <span>Fortalecer la comunidad educativa</span>
-                  </li>
-                  <li class="flex items-center space-x-2">
-                    <CheckCircle className="text-green-500" />
-                    <span
-                      >Apoyar iniciativas académicas y extracurriculares</span
-                    >
-                  </li>
-                  <li class="flex items-center space-x-2">
-                    <CheckCircle className="text-green-500" />
-                    <span>Fomentar la participación activa de las familias</span
-                    >
-                  </li>
-                  <li class="flex items-center space-x-2">
-                    <CheckCircle className="text-green-500" />
-                    <span>Mejorar la infraestructura y recursos escolares</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
           </div>
-          <div class="flex flex-col justify-center space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>¿Por qué unirte?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p
-                  class="text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400"
-                >
-                  Al ser parte de APAFA145, tendrás la oportunidad de:
-                </p>
-                <ul
-                  class="list-disc list-inside mt-4 space-y-2 text-gray-500 dark:text-gray-400"
-                >
-                  <li>
-                    Influir en las decisiones que afectan la educación de tu
-                    hijo
-                  </li>
-                  <li>Participar en eventos y actividades escolares</li>
-                  <li>Colaborar con otros padres y educadores</li>
-                  <li>
-                    Contribuir al desarrollo integral de la comunidad escolar
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg">Únete a APAFA145</Button>
-              <Button size="lg" variant="outline">Conoce más</Button>
+          <div class="mx-auto max-w-3xl mt-8">
+            <AccordionDemo client:load />
+          </div>
+        </section>
+
+        <section class="container px-4 py-12 md:py-24 lg:py-32">
+          <div class="mx-auto max-w-3xl space-y-4 text-center">
+            <h2
+              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+            >
+              Únete Hoy
+            </h2>
+            <p
+              class="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+            >
+              Forma parte activa de nuestra APAFA y haz la diferencia en la vida
+              de nuestros hijos. Si tienes preguntas o deseas más información,
+              no dudes en ponerte en contacto con nosotros.
+            </p>
+            <div class="flex justify-center gap-4">
+              <Button size="lg">Contáctanos</Button>
+              <Button size="lg" variant="outline">Más Información</Button>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      <section
-        class="container px-4 py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
-      >
-        <div class="mx-auto max-w-3xl space-y-4 text-center">
-          <h2
-            class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
-          >
-            ¿Qué Hacemos?
-          </h2>
-          <p
-            class="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
-          >
-            Descubre nuestras actividades y cómo contribuimos a la comunidad
-            escolar.
-          </p>
-        </div>
-        <div class="mx-auto max-w-3xl mt-8">
-          <AccordionDemo client:load />
-        </div>
-      </section>
-
-      <section class="container px-4 py-12 md:py-24 lg:py-32">
-        <div class="mx-auto max-w-3xl space-y-4 text-center">
-          <h2
-            class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
-          >
-            Únete Hoy
-          </h2>
-          <p
-            class="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
-          >
-            Forma parte activa de nuestra APAFA y haz la diferencia en la vida
-            de nuestros hijos. Si tienes preguntas o deseas más información, no
-            dudes en ponerte en contacto con nosotros.
-          </p>
-          <div class="flex justify-center gap-4">
-            <Button size="lg">Contáctanos</Button>
-            <Button size="lg" variant="outline">Más Información</Button>
+      <footer class="border-t">
+        <div
+          class="container flex flex-col gap-4 py-10 md:flex-row md:justify-between md:py-12"
+        >
+          <div class="flex flex-col gap-2">
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              © 2024 APAFA145. Todos los derechos reservados.
+            </p>
           </div>
+          <nav class="flex gap-4 sm:gap-6">
+            <a
+              class="text-sm hover:underline underline-offset-4"
+              href="mailto:contacto@apafa145.com"
+            >
+              Contacto
+            </a>
+            <a
+              class="text-sm hover:underline underline-offset-4"
+              href="/privacy"
+            >
+              Política de Privacidad
+            </a>
+            <a class="text-sm hover:underline underline-offset-4" href="/terms">
+              Términos de Uso
+            </a>
+          </nav>
         </div>
-      </section>
-    </main>
-
-    <footer class="border-t bg-gray-100 dark:bg-gray-800">
-      <div
-        class="container flex flex-col gap-4 py-10 md:flex-row md:justify-between md:py-12"
-      >
-        <div class="flex flex-col gap-2">
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-            © 2024 APAFA145. Todos los derechos reservados.
-          </p>
-        </div>
-        <nav class="flex gap-4 sm:gap-6">
-          <a
-            class="text-sm hover:underline underline-offset-4"
-            href="mailto:contacto@apafa145.com"
-          >
-            Contacto
-          </a>
-          <a class="text-sm hover:underline underline-offset-4" href="/privacy">
-            Política de Privacidad
-          </a>
-          <a class="text-sm hover:underline underline-offset-4" href="/terms">
-            Términos de Uso
-          </a>
-        </nav>
-      </div>
-    </footer>
+      </footer>
+    </div>
   </div>
 </Layout>

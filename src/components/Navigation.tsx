@@ -26,10 +26,14 @@ export function Navigation({ role, name, path }: HeaderProps) {
 
   return (
     <header className="sticky top-5 h-10 px-6 z-50">
-      <nav className="h-full border rounded-md flex items-center justify-between gap-2 px-4 pr-1 bg-background ">
+      <nav className="h-full border rounded-md flex items-center justify-between gap-2 px-4 pr-1 bg-background">
         <a href="/" className="text-sm font-semibold">APAFA145</a>
-        <div className="flex items-center gap-1">
-          <ModeToggle />
+        <div className="flex gap-1">
+          <Button variant="link" className="h-8 hover:no-underline hover:bg-accent font-medium" onClick={() => window.location.href = '/#about-us'}>Historia</Button>
+          <Button variant="link" className="h-8 hover:no-underline hover:bg-accent font-medium" onClick={() => window.location.href = '/#faq'}>Nosotros</Button>
+        </div>
+        <div className="flex items-center gap-1 justify-around">
+          {/* <ModeToggle /> */}
           <Button variant="secondary" className="h-8" onClick={() => window.location.href = '/intranet'}>
             Intranet
           </Button>

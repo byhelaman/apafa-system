@@ -6,6 +6,17 @@ export const GET: APIRoute = async ({ request }) => {
   return new Response(JSON.stringify(data), { status: 200 });
 };
 
+export const DELETE: APIRoute = async ({ request }) => {
+  const { partner_id } = await request.json();
+  const { data, error } = await supabase.from('temp_data').delete().eq('partner_id', partner_id)
+
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  }
+
+  return new Response(JSON.stringify({ message: 'Request deleted' }), { status: 200 });
+}
+
 export const POST: APIRoute = async ({ request }) => {
   const { partner_id } = await request.json();
 
